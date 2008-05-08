@@ -26,6 +26,16 @@ describe Time do
       expected = Time.local(@year, @month, @day, @time.hour, @time.min, @time.sec)
       @time.on_date(@year, @month, @day).should == expected
     end
+    
+    it 'should accept a date' do
+      lambda { @time.on_date(Date.today) }.should_not raise_error(ArgumentError)
+    end
+    
+    it 'should return the same time on the specified date' do
+      @date = Date.today - 2345
+      expected = Time.local(@date.year, @date.month, @date.day, @time.hour, @time.min, @time.sec)
+      @time.on_date(@date).should == expected
+    end
   end
   
   it "should provide 'on' as an alias" do
