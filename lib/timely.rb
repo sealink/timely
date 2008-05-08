@@ -5,3 +5,4 @@ module Timely
 end
 
 require 'timely/date'
+require 'timely/time'
