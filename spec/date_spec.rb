@@ -49,6 +49,16 @@ describe Date do
       expected = Time.local(@date.year, @date.month, @date.day, 0, 0, 0)
       @date.at_time.should == expected
     end
+    
+    it 'should accept a time' do
+      lambda { @date.at_time(Time.now) }.should_not raise_error(ArgumentError)
+    end
+    
+    it 'should return the passed-in time on the date' do
+      @time = Time.now - 12345
+      expected = Time.local(@date.year, @date.month, @date.day, @time.hour, @time.min, @time.sec)
+      @date.at_time(@time).should == expected
+    end
   end
   
   it "should provide 'at' as an alias" do
