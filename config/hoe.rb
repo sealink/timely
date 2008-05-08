@@ -1,10 +1,10 @@
 require 'timely/version'
 
-AUTHOR = 'FIXME full name'  # can also be an array of Authors
+AUTHOR = 'Yossef Mendelssohn'  # can also be an array of Authors
 EMAIL = "ymendel@pobox.com"
-DESCRIPTION = "description of gem"
+DESCRIPTION = "adds some convenience methods to Date and Time to easily create times on specific dates"
 GEM_NAME = 'timely' # what ppl will type to install your gem
-RUBYFORGE_PROJECT = 'timely' # The unix name for your project
+RUBYFORGE_PROJECT = 'yomendel' # The unix name for your project
 HOMEPATH = "http://#{RUBYFORGE_PROJECT}.rubyforge.org"
 DOWNLOAD_PATH = "http://rubyforge.org/projects/#{RUBYFORGE_PROJECT}"
 EXTRA_DEPENDENCIES = [
