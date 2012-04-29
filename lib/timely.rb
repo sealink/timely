@@ -1,8 +1,17 @@
-$:.unshift(File.dirname(__FILE__)) unless
-  $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
-
 module Timely
-end
+  VERSION = '0.0.1'
 
-require 'timely/date'
-require 'timely/time'
+  require 'time'
+  require 'date'
+
+  require 'timely/string'
+  require 'timely/date'
+  require 'timely/time'
+  require 'timely/date_time'
+  require 'timely/range'
+  require 'timely/date_range'
+  require 'timely/date_chooser'
+  require 'timely/week_days'
+  require 'timely/temporal_patterns'
+  require 'timely/trackable_date_set'
+end

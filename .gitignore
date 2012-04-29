@@ -1,1 +1,4 @@
 pkg
+coverage
+Gemfile.lock
+tmp

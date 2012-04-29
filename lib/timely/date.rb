@@ -5,10 +5,10 @@ module Timely
         time = hour
         hour, minute, second = time.hour, time.min, time.sec
       end
-      
+
       ::Time.local(year, month, day, hour, minute, second)
     end
-    
+
     alias_method :at, :at_time
   end
 end
