@@ -8,6 +8,7 @@ module Timely
       db_field = options[:db_field] || attribute.to_s + '_bit_array'
       self.composed_of(attribute,
         :class_name => "Timely::WeekDays",
+        :allow_nil  => true,
         :mapping    => [[db_field, 'weekdays_int']],
         :converter  => Proc.new {|field| Timely::WeekDays.new(field)}
       )
