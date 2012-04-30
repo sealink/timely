@@ -7,6 +7,8 @@
 
 require 'rubygems'
 require 'bundler/setup'
+require 'active_record'
+require 'timely/rails'
 
 if ENV['COVERAGE']
   require 'simplecov'
@@ -28,6 +30,14 @@ if ENV['COVERAGE']
 end
 
 require 'timely'
+
+DB_FILE = 'tmp/test_db'
+FileUtils.mkdir_p File.dirname(DB_FILE)
+FileUtils.rm_f DB_FILE
+
+ActiveRecord::Base.establish_connection :adapter => 'sqlite3', :database => DB_FILE
+
+load('spec/schema.rb')
 
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
