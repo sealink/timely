@@ -1,10 +1,12 @@
 module Timely
   class DateRange < ::Range
-    def initialize(range)
-      if range.is_a?(Range)
-        super(range.first, range.last)
-      elsif range.is_a?(Date)
-        super(range, range)
+    def initialize(*args)
+      if args.first.is_a?(Range)
+        super(args.first.first, args.first.last)
+      elsif args.size == 1 && args.first.is_a?(Date)
+        super(args.first, args.first)
+      else
+        super(*args)
       end
     end
     alias_method :start_date, :first

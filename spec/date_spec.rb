@@ -62,7 +62,7 @@ describe Date do
   end
 
   it "should provide 'at' as an alias" do
-    expected = expected = Time.local(@date.year, @date.month, @date.day, @hour, @minute, @second)
+    expected = Time.local(@date.year, @date.month, @date.day, @hour, @minute, @second)
     @date.at(@hour, @minute, @second).should == expected
   end
 end
