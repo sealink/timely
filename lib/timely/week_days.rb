@@ -36,6 +36,16 @@ module Timely
         weekdays.each.with_index do |value, index|
           set_day(WEEKDAY_KEYS[index], value)
         end
+      when NilClass
+        @weekdays = {
+          :sun => true,
+          :mon => true,
+          :tue => true,
+          :wed => true,
+          :thu => true,
+          :fri => true,
+          :sat => true
+        }
       else
         raise ArgumentError, "You must initialize with an Fixnum, Hash or Array"
       end
