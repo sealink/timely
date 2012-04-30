@@ -23,7 +23,7 @@ require 'set'
 #
 module Timely
   class TrackableDateSet
-    attr_reader :start_date, :end_date
+    attr_reader :start_date, :end_date, :dates_to_do
 
     # Pass in dates as array, range or any kind of enumerable
     def initialize(dates)
