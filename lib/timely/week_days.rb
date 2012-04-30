@@ -26,7 +26,7 @@ module Timely
       when Fixnum
         # 4 -> 0000100 (binary) -> "0010000" (reversed string) -> {:tue => true}
         weekdays.to_s(2).reverse.each_char.with_index do |char, index|
-          set_day(WEEKDAY_KEYS[index], char == '1')
+          set_day(index, char == '1')
         end
       when Hash
         weekdays.each_pair do |day, value|
@@ -34,7 +34,7 @@ module Timely
         end
       when Array
         weekdays.each.with_index do |value, index|
-          set_day(WEEKDAY_KEYS[index], value)
+          set_day(index, value)
         end
       when NilClass
         @weekdays = {
@@ -61,8 +61,15 @@ module Timely
     end
 
     def set_day(day, set)
-      raise ArgumentError, "Invalid week day index #{day}" unless WEEKDAY_KEYS.include?(day)
-      @weekdays[day] = [true, 'true', 1, '1'].include?(set)
+      key = if day.is_a?(Fixnum)
+        WEEKDAY_KEYS[day]
+      elsif day.is_a?(String)
+        day.to_sym
+      else
+        day
+      end
+      raise ArgumentError, "Invalid week day index #{key}" unless WEEKDAY_KEYS.include?(key)
+      @weekdays[key] = [true, 'true', 1, '1'].include?(set)
     end
 
     def applies_for_date?(date)
