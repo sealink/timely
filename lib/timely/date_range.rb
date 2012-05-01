@@ -14,7 +14,7 @@ module Timely
 
     def self.from_params(start_date, duration = nil)
       start_date = start_date.to_date
-      duration   = [1, duration.to_i].min
+      duration   = [1, duration.to_i].max
 
       new(start_date..(start_date + duration - 1))
     end
