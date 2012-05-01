@@ -19,7 +19,7 @@ module Timely
       validates_associated :season
 
       named_scope :season_on, lambda { |*args|
-        date = args.first || Date.current # Can't assign in block in Ruby 1.8
+        date = args.first || ::Date.current # Can't assign in block in Ruby 1.8
         {
           :joins => {:season => :date_groups},
           :conditions => ["date_groups.start_date <= ? AND date_groups.end_date >= ?", date, date]
@@ -27,7 +27,7 @@ module Timely
       }
 
       named_scope :available_from, lambda { |*args|
-        date = args.first || Date.current # Can't assign in block in Ruby 1.8
+        date = args.first || ::Date.current # Can't assign in block in Ruby 1.8
         {:conditions => ["boundary_end >= ?", date]}
       }
 
