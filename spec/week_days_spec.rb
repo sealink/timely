@@ -20,8 +20,11 @@ describe Timely::WeekDays do
     @weekdays.weekdays.should == [:mon, :thu]
   end
 
-  it 'should output days nicely' do
-    @weekdays.to_s.should == 'Tue, Thu'
+  it 'should output days nicely' do 
+    Timely::WeekDays.new(%w(1 0 0 0 0 0 0)).to_s.should == "Sun"
+    Timely::WeekDays.new(%w(1 0 1 0 0 0 0)).to_s.should == "Sun, and Tue"
+    Timely::WeekDays.new(%w(1 0 1 1 0 0 0)).to_s.should == "Sun, Tue, and Wed"
+    Timely::WeekDays.new(%w(1 0 1 1 0 1 0)).to_s.should == "Sun, Tue, Wed, and Fri"    
   end
 
   it 'should be able to determine if days of the week are selected' do
