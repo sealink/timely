@@ -106,13 +106,10 @@ module Timely
     # Returns comma separated and capitalized in Sun-Sat order
     # e.g. 'Mon, Tue, Wed' or 'Sat' or 'Sun, Sat'
     def to_s
-      capitalized = weekdays.map{|day| day.to_s.capitalize}
-      *days , last_day = capitalized
-      if days.empty?
-        last_day
-      else
-        days.join(", ") + ", and " + last_day
-      end
+      days = weekdays.map{|day| day.to_s.capitalize}
+      last_day = days.pop
+
+      days.empty? ? last_day : days.join(", ") + ", and " + last_day
     end
 
     # 7 bits encoded in decimal number
