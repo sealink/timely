@@ -16,7 +16,7 @@ class DateGroup < ActiveRecord::Base
 
   
   def applicable_for_duration?(date_range)
-    includes_date?(date_range.first) and includes_date?(date_range.last) and !date_range.detect{|d| includes_date?(d)}.nil?
+    date_range.any?{|d| includes_date?(d)}
   end
   
   
