@@ -19,5 +19,22 @@ describe Timely::DateRange do
     @date_range.start_date.should eql Date.today
     @date_range.end_date.should eql Date.today + 3
   end
+
+  it "should correctly find the interesection between two date ranges" do
+    @date_range = Timely::DateRange.new("2000-01-03".to_date, "2000-01-06".to_date)
+    @date_range.intersecting_dates(Timely::DateRange.new("2000-01-04".to_date, "2000-01-07".to_date)).should == ("2000-01-04".to_date.."2000-01-06".to_date)
+    @date_range.intersecting_dates(Timely::DateRange.new("2000-01-01".to_date, "2000-01-02".to_date)).should == []
+    @date_range.intersecting_dates(Timely::DateRange.new("2000-01-01".to_date, "2000-01-03".to_date)).should == ("2000-01-03".to_date.."2000-01-03".to_date)
+    @date_range.intersecting_dates(Timely::DateRange.new("2000-01-06".to_date, "2000-01-07".to_date)).should == ("2000-01-06".to_date.."2000-01-06".to_date)
+    @date_range.intersecting_dates(Timely::DateRange.new("2000-01-06".to_date, "2000-01-07".to_date)).should == ("2000-01-06".to_date.."2000-01-06".to_date)
+    @date_range.intersecting_dates(Timely::DateRange.new("2000-01-04".to_date, "2000-01-05".to_date)).should == ("2000-01-04".to_date.."2000-01-05".to_date)
+    @date_range.intersecting_dates(Timely::DateRange.new("2000-01-05".to_date, "2000-01-05".to_date)).should == ("2000-01-05".to_date.."2000-01-05".to_date)
+
+    @date_range = Timely::DateRange.new("2000-01-03".to_date, "2000-01-03".to_date)
+    @date_range.intersecting_dates(Timely::DateRange.new("2000-01-04".to_date, "2000-01-07".to_date)).should == []
+    @date_range.intersecting_dates(Timely::DateRange.new("2000-01-01".to_date, "2000-01-03".to_date)).should == ("2000-01-03".to_date.."2000-01-03".to_date)
+    @date_range.intersecting_dates(Timely::DateRange.new("2000-01-03".to_date, "2000-01-05".to_date)).should == ("2000-01-03".to_date.."2000-01-03".to_date)
+    @date_range.intersecting_dates(Timely::DateRange.new("2000-01-02".to_date, "2000-01-04".to_date)).should == ("2000-01-03".to_date.."2000-01-03".to_date)
+  end
   
 end

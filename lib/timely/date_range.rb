@@ -19,6 +19,16 @@ module Timely
       new(start_date..(start_date + duration - 1))
     end
 
+    def intersecting_dates(date_range)
+      start_of_intersection = [self.start_date, date_range.first].max
+      end_of_intersection = [self.end_date, date_range.last].min
+      intersection = if end_of_intersection >= start_of_intersection
+        (start_of_intersection..end_of_intersection)
+      else
+        []
+      end
+    end
+
     def number_of_nights
       ((last - first) + 1).to_i
     end

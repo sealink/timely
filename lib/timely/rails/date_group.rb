@@ -16,7 +16,13 @@ class DateGroup < ActiveRecord::Base
 
   
   def applicable_for_duration?(date_range)
-    date_range.any?{|d| includes_date?(d)}
+    if date_range.first > end_date || date_range.last < start_date
+      false
+    elsif weekdays.all_days?
+      true
+    else
+      date_range.intersecting_dates(start_date..end_date).any?{|d| weekdays.applies_for_date?(d)}
+    end
   end
   
   
