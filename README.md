@@ -13,6 +13,12 @@ It includes the following (see end for full descriptions)
 * TrackableDateSet: Recording set of dates processed/processing
 * TemporalPatterns: Various other classes related to time, e.g. Frequency
 
+It includes the following rails extensions (only loaded if inside rails project):
+* Date Group, a date range which can also be limited to WeekDays, e.g. all weekends between March and April
+* Season, a collection of Date Groups
+* weekdays_field, a way to declare an integer field to store weekdays (weekdays is stored as 7 bit integer)
+* acts_as_seasonal, a way to declare a season_id foreign key as well as some helper methods
+
 # INSTALLATION
 
 gem install timely
@@ -29,6 +35,7 @@ As these contain many basic examples with expected output.
 
 ## Core Extensions
 
+```ruby
 some_date = Date.today - 5      # => 2008-05-03
 some_date.at_time(3, 5, 13)     # => Sat May 03 03:05:13 -0500 2008
 
@@ -45,3 +52,4 @@ some_date.at_time(some_time)    # => Sat May 03 13:40:22 -0500 2008
 # if you like typing less
 some_time.on(some_date)         # => Sat May 03 13:40:22 -0500 2008
 some_date.at(some_time)         # => Sat May 03 13:40:22 -0500 2008
+```
