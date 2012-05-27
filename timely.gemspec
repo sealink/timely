@@ -79,6 +79,7 @@ Gem::Specification.new do |s|
     lib/timely/week_days.rb
     rails/init.rb
     spec/date_chooser_spec.rb
+    spec/date_group_spec.rb
     spec/date_range_spec.rb
     spec/date_spec.rb
     spec/schema.rb
