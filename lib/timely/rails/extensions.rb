@@ -14,22 +14,34 @@ module Timely
     end
 
     def acts_as_seasonal
-      belongs_to :season
+      belongs_to :season, :class_name => 'Timely::Season'
       accepts_nested_attributes_for :season
       validates_associated :season
 
-      named_scope :season_on, lambda { |*args|
-        date = args.first || ::Date.current # Can't assign in block in Ruby 1.8
-        {
-          :joins => {:season => :date_groups},
-          :conditions => ["date_groups.start_date <= ? AND date_groups.end_date >= ?", date, date]
+      if Rails.version > '3'
+        scope :season_on, lambda { |*args|
+          date = args.first || ::Date.current # Can't assign in block in Ruby 1.8
+          joins(:season => :date_groups).where("date_groups.start_date <= ? AND date_groups.end_date >= ?", date, date)
         }
-      }
 
-      named_scope :available_from, lambda { |*args|
-        date = args.first || ::Date.current # Can't assign in block in Ruby 1.8
-        {:conditions => ["boundary_end >= ?", date]}
-      }
+        scope :available_from, lambda { |*args|
+          date = args.first || ::Date.current # Can't assign in block in Ruby 1.8
+          where("boundary_end >= ?", date)
+        }
+      else
+        named_scope :season_on, lambda { |*args|
+          date = args.first || ::Date.current # Can't assign in block in Ruby 1.8
+          {
+            :joins => {:season => :date_groups},
+            :conditions => ["date_groups.start_date <= ? AND date_groups.end_date >= ?", date, date]
+          }
+        }
+
+        named_scope :available_from, lambda { |*args|
+          date = args.first || ::Date.current # Can't assign in block in Ruby 1.8
+          {:conditions => ["boundary_end >= ?", date]}
+        }
+      end
 
       before_save do |object|
         if object.season

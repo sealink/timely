@@ -20,6 +20,15 @@ describe Timely::DateRange do
     @date_range.end_date.should eql Date.today + 3
   end
 
+  it 'should print a readable version of time between two dates' do
+    Timely::DateRange.to_s('2000-01-04'.to_date, '2000-01-04'.to_date).should == '2000-01-04'
+    Timely::DateRange.to_s('2000-01-04'.to_date, '2000-01-06'.to_date).should == '2000-01-04 to 2000-01-06 (inclusive)'
+    Timely::DateRange.to_s('2000-01-01'.to_date, '2000-05-31'.to_date).should == 'Jan 2000 to May 2000'
+    Timely::DateRange.to_s('2000-01-01'.to_date, '2000-01-31'.to_date).should == 'Jan 2000'
+    Timely::DateRange.to_s('2000-01-01'.to_date, nil).should == 'on or after 2000-01-01'
+    Timely::DateRange.to_s(nil, '2000-01-31'.to_date).should == 'on or before 2000-01-31'
+  end
+
   it "should correctly find the interesection between two date ranges" do
     @date_range = Timely::DateRange.new("2000-01-03".to_date, "2000-01-06".to_date)
     @date_range.intersecting_dates(Timely::DateRange.new("2000-01-04".to_date, "2000-01-07".to_date)).should == ("2000-01-04".to_date.."2000-01-06".to_date)

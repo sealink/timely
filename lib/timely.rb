@@ -14,4 +14,6 @@ module Timely
   require 'timely/week_days'
   require 'timely/temporal_patterns'
   require 'timely/trackable_date_set'
+
+  require 'timely/railtie' if defined?(Rails::Railtie)
 end

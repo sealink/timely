@@ -1,6 +1,14 @@
 require 'spec_helper'
 
 describe Date do
+  it 'should determine if date between' do
+    Date.today.between?(nil, nil).should == true
+    Date.today.between?(Date.today - 1, Date.today - 1).should == false
+    Date.today.between?(Date.today - 1, nil).should == true
+  end
+end
+
+describe Date do
   before :each do
     @date = Date.today - 5
 

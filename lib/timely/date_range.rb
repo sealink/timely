@@ -34,17 +34,27 @@ module Timely
     end
     alias_method :duration, :number_of_nights
 
-    def to_s(fmt = '%b %Y')
-      if first == last
-        first.to_s(:short)
-      elsif first == first.at_beginning_of_month && last == last.at_end_of_month
-        if first.month == last.month
-          first.strftime(fmt)
+    def to_s(fmt = '%b %Y', date_fmt = '%d-%m-%Y')
+      Timely::DateRange.to_s(first, last, fmt, date_fmt)
+    end
+
+    def self.to_s(first = nil, last = nil, fmt = '%b %Y', date_fmt = '%Y-%m-%d')
+      if first && last
+        if first == last
+          first.strftime(date_fmt)
+        elsif first == first.at_beginning_of_month && last == last.at_end_of_month
+          if first.month == last.month
+            first.strftime(fmt)
+          else
+            "#{first.strftime(fmt)} to #{last.strftime(fmt)}"
+          end
         else
-          "#{first.strftime(fmt)} to #{last.strftime(fmt)}"
+          "#{first.strftime(date_fmt)} to #{last.strftime(date_fmt)} (inclusive)"
         end
-      else
-        "#{first.to_s(:short)} to #{last.to_s(:short)}"
+      elsif first
+        "on or after #{first.strftime(date_fmt)}"
+      elsif last
+        "on or before #{last.strftime(date_fmt)}"
       end
     end
   end
