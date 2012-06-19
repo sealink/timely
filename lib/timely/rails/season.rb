@@ -6,7 +6,9 @@ module Timely
       :reject_if => proc {|attributes| attributes['start_date'].blank?},
       :allow_destroy => true
 
-    def validate
+    validate :validate_dates_specified
+
+    def validate_dates_specified
       errors.add_to_base("No dates specified") if date_groups.blank?
       errors.empty?
     end
