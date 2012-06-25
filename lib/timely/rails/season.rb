@@ -48,9 +48,9 @@ module Timely
     end
 
     def deep_clone
-      cloned = self.clone
+      cloned = self.dup
       date_groups.each do |dg|
-        cloned.date_groups.build(dg.clone.attributes.except(:id))
+        cloned.date_groups.build(dg.dup.attributes)
       end
       cloned
     end
