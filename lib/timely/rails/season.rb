@@ -48,9 +48,11 @@ module Timely
     end
 
     def deep_clone
-      cloned = self.dup
+      # Use clone until it is removed in AR 3.1, then dup is the same
+      method = ActiveRecord::Base.instance_methods(false).include?(:clone) ? :clone : :dup
+      cloned = self.send(method)
       date_groups.each do |dg|
-        cloned.date_groups.build(dg.dup.attributes)
+        cloned.date_groups.build(dg.send(method).attributes)
       end
       cloned
     end
