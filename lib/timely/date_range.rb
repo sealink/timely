@@ -2,15 +2,26 @@ module Timely
   class DateRange < ::Range
     def initialize(*args)
       if args.first.is_a?(Range)
-        super(args.first.first, args.first.last)
+        date_range = args.first
+        DateRange.validate_range(date_range.first, date_range.last)
+        super(range.first.to_date, range.last.to_date)
       elsif args.size == 1 && args.first.is_a?(Date)
-        super(args.first, args.first)
+        DateRange.validate_range(args.first, args.last)
+        super(args.first.to_date, args.first.to_date)
       else
-        super(*args)
+        DateRange.validate_range(args.first, args.last)
+        super(args.first.to_date, args.last.to_date)
       end
     end
     alias_method :start_date, :first
     alias_method :end_date, :last
+
+    def self.validate_range(first, last)
+      raise ArgumentError, "Date range missing start date" if first.nil?
+      raise ArgumentError, "Date range missing end date" if last.nil?
+      raise ArgumentError, "Start date is not a date" unless first.is_a? Date
+      raise ArgumentError, "End date is not a date" unless last.is_a? Date
+    end
 
     def self.from_params(start_date, duration = nil)
       start_date = start_date.to_date
