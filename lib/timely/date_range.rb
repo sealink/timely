@@ -4,7 +4,7 @@ module Timely
       if args.first.is_a?(Range)
         date_range = args.first
         DateRange.validate_range(date_range.first, date_range.last)
-        super(range.first.to_date, range.last.to_date)
+        super(date_range.first.to_date, date_range.last.to_date)
       elsif args.size == 1 && args.first.is_a?(Date)
         DateRange.validate_range(args.first, args.last)
         super(args.first.to_date, args.first.to_date)
