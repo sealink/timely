@@ -37,12 +37,20 @@ describe Timely::DateChooser do
     ).choose_dates.should == (@from..@to).to_a
   end
 
-  it "returns the specific dates if this option is picked" do
+  it "returns the recurring dates within the range if this option is picked" do
     Timely::DateChooser.new(
       :multiple_dates => true, :select => 'days', :dates => '1,11,3', :from => @from, :to => @to
     ).choose_dates.should == [
       "1-01-2011", "3-01-2011", "11-01-2011", "1-02-2011",
       "3-02-2011", "11-02-2011", "1-03-2011"
+    ].map(&:to_date)
+  end
+
+  it "returns the specific dates, within or outside of the range, if this option is picked" do
+    Timely::DateChooser.new(
+      :multiple_dates => true, :select => 'specific_days', :specific_dates => '11-01-2011, 18-02-2011, 22-06-2011', :from => @from, :to => @to
+    ).choose_dates.should == [
+      "11-01-2011", "18-02-2011", "22-06-2011"
     ].map(&:to_date)
   end
 

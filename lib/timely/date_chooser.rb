@@ -20,6 +20,7 @@ module Timely
       @to       = process_date(options[:to])
       @select   = options[:select]
       @dates    = options[:dates]
+      @specific_dates = options[:specific_dates]
       @interval = options[:interval]
       @weekdays = WeekDays.new(options[:weekdays]) if @select == 'weekdays'
       validate
@@ -40,7 +41,8 @@ module Timely
     #   :to       - The end of the date range
     #
     # You can either specify specific dates to be chosen each month:
-    #   :dates    - A comma separated string of days of the month, e.g. 1,16
+    #   :dates          - A comma separated string of days of the month, e.g. 1,16
+    #   :specific_dates - A comma separated string of dates, e.g. 26-10-2012, 03-11-2012, 01-01-2013
     #
     # or you can specify how to select the dates
     #   :day      - A hash of days, the index being the wday, e.g. 0 = sunday, and the value being 1 if chosen
@@ -60,6 +62,9 @@ module Timely
       when 'days'
         days = @dates.gsub(/\s/, '').split(',')
         all_days.select { |date| days.include?(date.mday.to_s) }
+      when 'specific_days'
+        days = @specific_dates.gsub(/\s/, '').split(',')
+        days.map(&:to_date)
       when 'weekdays'
         raise DateChooserException, "No days of the week selected" if @weekdays.weekdays.empty?
         raise DateChooserException, "No weekly interval selected" if @interval && @interval.empty?
