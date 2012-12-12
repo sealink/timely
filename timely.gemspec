@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   ## the sub! line in the Rakefile
   s.name              = 'timely'
   s.version           = '0.0.2'
-  s.date              = '2012-05-27'
+  s.date              = '2012-12-13'
   s.rubyforge_project = 'timely'
 
   ## Make sure your summary is short. The description may be as long
@@ -69,11 +69,16 @@ Gem::Specification.new do |s|
     lib/timely/date_time.rb
     lib/timely/rails.rb
     lib/timely/rails/date_group.rb
+    lib/timely/rails/date_range_validity_module.rb
     lib/timely/rails/extensions.rb
     lib/timely/rails/season.rb
+    lib/timely/railtie.rb
     lib/timely/range.rb
     lib/timely/string.rb
-    lib/timely/temporal_patterns.rb
+    lib/timely/temporal_patterns/finder.rb
+    lib/timely/temporal_patterns/frequency.rb
+    lib/timely/temporal_patterns/interval.rb
+    lib/timely/temporal_patterns/pattern.rb
     lib/timely/time.rb
     lib/timely/trackable_date_set.rb
     lib/timely/week_days.rb
@@ -86,6 +91,7 @@ Gem::Specification.new do |s|
     spec/season_spec.rb
     spec/spec_helper.rb
     spec/string_spec.rb
+    spec/temporal_patterns_spec.rb
     spec/time_spec.rb
     spec/trackable_date_set_spec.rb
     spec/week_days_spec.rb
