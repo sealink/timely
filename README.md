@@ -1,6 +1,10 @@
 Timely
 ======
 
+[![Build Status](https://travis-ci.org/sealink/timely.png?branch=master)](https://travis-ci.org/sealink/timely)
+[![Build Status](https://gemnasium.com/sealink/timely.png?travis)](https://gemnasium.com/sealink/timely)
+[![Build Status](https://codeclimate.com/github/sealink/timely.png)](https://codeclimate.com/github/sealink/timely)
+
 # DESCRIPTION
 
 Various helpers to work with times, dates and weekdays, etc.
