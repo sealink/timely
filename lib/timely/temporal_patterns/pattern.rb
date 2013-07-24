@@ -1,3 +1,5 @@
+require 'active_support/core_ext/integer/inflections' # ordinalize
+
 module Timely
   module TemporalPatterns
     class Pattern
