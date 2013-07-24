@@ -8,7 +8,8 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'active_record'
-require 'timely/rails'
+
+MINIMUM_COVERAGE = 63
 
 if ENV['COVERAGE']
   require 'simplecov'
@@ -22,14 +23,15 @@ if ENV['COVERAGE']
   SimpleCov.at_exit do
     SimpleCov.result.format!
     percent = SimpleCov.result.covered_percent
-    unless percent >= 66
-      puts "Coverage must be above 66%. It is #{"%.2f" % percent}%"
+    unless percent >= MINIMUM_COVERAGE
+      puts "Coverage must be above #{MINIMUM_COVERAGE}%. It is #{"%.2f" % percent}%"
       Kernel.exit(1)
     end
   end
 end
 
 require 'timely'
+require 'timely/rails'
 
 DB_FILE = 'tmp/test_db'
 FileUtils.mkdir_p File.dirname(DB_FILE)
