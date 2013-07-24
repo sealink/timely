@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Timely::TemporalPatterns do
 
   before(:all) do
-    @from = '01-01-2012'.to_date('%d-%m-%Y')
-    @to = '01-04-2013'.to_date('%d-%m-%Y')
+    @from = Date.new(2012, 1, 1)
+    @to   = Date.new(2013, 4, 1)
   end
 
   it "should be able to create a basic 1st-of-the-month recurrence pattern" do
