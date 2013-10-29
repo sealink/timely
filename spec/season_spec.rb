@@ -34,25 +34,24 @@ end
 
 
 describe Timely::Season, 'when asked to build season for given dates' do
-  before do
-    @dates = [Date.current + 1, Date.current + 4, Date.current + 5]
+  subject(:season) { Timely::Season.build_season_for(dates) }
+
+  context 'when three dates' do
+    let(:dates) { [Date.current + 1, Date.current + 4, Date.current + 5] }
+    its(:class) { should == Timely::Season }
+    it { should have(3).date_groups }
+
+    it "should generate proper date groups" do
+      season.date_groups.first.start_date.should == (Date.current + 1)
+      season.date_groups.last.start_date.should == (Date.current + 5)
+      season.date_groups.last.end_date.should == (Date.current + 5)
+    end
   end
 
-  it "should generate proper season" do
-    season = Timely::Season.build_season_for(@dates)
-    season.class.should == Timely::Season
-    season.date_groups.size.should == 3
-    season.date_groups.first.start_date.should == (Date.current + 1)
-    season.date_groups.last.start_date.should == (Date.current + 5)
-    season.date_groups.last.end_date.should == (Date.current + 5)
-    @dates = []
-    season = Timely::Season.build_season_for(@dates)
-    season.class.should == Timely::Season
-    season.date_groups.size.should == 0
+  context 'when dates are empty' do
+    let(:dates) { [] }
+    its(:date_groups) { should be_empty }
   end
-
-
-
 end
 
 
