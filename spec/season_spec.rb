@@ -33,21 +33,6 @@ describe Timely::Season, "in general" do
 end
 
 
-describe Timely::DateGroup do
-  before do
-    @date_group = Timely::DateGroup.create!(
-      :start_date => '2000-01-01', :end_date => '2000-01-03', :weekdays => %w(1 1 1 1 1 1 1)
-    )
-  end
-
-  it 'should detect overlaps' do
-    @date_group.applicable_for_duration?(Timely::DateRange.new('2000-01-01'.to_date, '2000-01-01'.to_date)).should be_true
-    @date_group.applicable_for_duration?(Timely::DateRange.new('2000-01-01'.to_date, '2000-01-06'.to_date)).should be_true
-    @date_group.applicable_for_duration?(Timely::DateRange.new('2001-01-01'.to_date, '2001-01-01'.to_date)).should be_false
-  end
-end
-
-
 describe Timely::Season, 'when asked to build season for given dates' do
   before do
     @dates = [Date.current + 1, Date.current + 4, Date.current + 5]
