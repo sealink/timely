@@ -1,7 +1,7 @@
 require "spec_helper"
 describe Timely::DateGroup do
   before do
-    @date_group = Timely::DateGroup.create!(
+    @date_group = Timely::DateGroup.new(
       :start_date => '2000-01-01', :end_date => '2000-01-03', :weekdays => %w(1 1 1 1 1 1 1)
     )
   end
