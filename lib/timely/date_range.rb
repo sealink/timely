@@ -66,6 +66,8 @@ module Timely
         "on or after #{first.strftime(date_fmt)}"
       elsif last
         "on or before #{last.strftime(date_fmt)}"
+      else
+        "no date range"
       end
     end
   end

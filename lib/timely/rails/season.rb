@@ -35,6 +35,10 @@ module Timely
       boundary_start..boundary_end
     end
 
+    def past?
+      boundary_end && boundary_end < ::Date.current
+    end
+
     def boundary_start
       date_groups.map(&:start_date).sort.first
     end
@@ -67,8 +71,9 @@ module Timely
     end
 
     def to_s
-      name
+      name.presence || Timely::DateRange.to_s(boundary_start, boundary_end)
     end
+
     alias_method :audit_name, :to_s
 
     def string_of_date_groups

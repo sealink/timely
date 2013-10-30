@@ -27,6 +27,7 @@ describe Timely::DateRange do
     Timely::DateRange.to_s('2000-01-01'.to_date, '2000-01-31'.to_date).should == 'Jan 2000'
     Timely::DateRange.to_s('2000-01-01'.to_date, nil).should == 'on or after 2000-01-01'
     Timely::DateRange.to_s(nil, '2000-01-31'.to_date).should == 'on or before 2000-01-31'
+    Timely::DateRange.to_s(nil, nil).should == 'no date range'
   end
 
   it "should correctly find the interesection between two date ranges" do
