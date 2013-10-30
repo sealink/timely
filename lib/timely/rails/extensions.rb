@@ -18,7 +18,7 @@ module Timely
       accepts_nested_attributes_for :season
       validates_associated :season
 
-      if Rails.version > '3'
+      if ::ActiveRecord::VERSION::MAJOR >= 3
         scope :season_on, lambda { |*args|
           date = args.first || ::Date.current # Can't assign in block in Ruby 1.8
           joins(:season => :date_groups).where("date_groups.start_date <= ? AND date_groups.end_date >= ?", date, date)
