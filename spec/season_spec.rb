@@ -6,13 +6,11 @@ describe Timely::Season, "in general" do
     @simple_low_season = Timely::Season.new
     @simple_low_season.date_groups.build(:start_date => '2009-01-01'.to_date, :end_date => '2009-03-31'.to_date)
     @simple_low_season.date_groups.build(:start_date => '2009-07-01'.to_date, :end_date => '2009-09-30'.to_date)
-    @simple_low_season.save!
 
     # 2nd and 4th Quarter
     @simple_high_season = Timely::Season.new
     @simple_high_season.date_groups.build(:start_date => '2009-04-01'.to_date, :end_date => '2009-06-30'.to_date)
     @simple_high_season.date_groups.build(:start_date => '2009-10-01'.to_date, :end_date => '2009-12-31'.to_date)
-    @simple_high_season.save!
   end
 
   it "be able to tell if a date is in or out of its season" do
