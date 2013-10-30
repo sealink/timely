@@ -1,4 +1,9 @@
 ActiveRecord::Schema.define(:version => 1) do
+  create_table :seasonals do |t|
+    t.date :boundary_start, :boundary_end
+    t.integer :season_id
+  end
+
   create_table :seasons do |t|
     t.string :name
   end

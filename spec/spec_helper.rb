@@ -9,7 +9,7 @@ require 'rubygems'
 require 'bundler/setup'
 require 'active_record'
 
-MINIMUM_COVERAGE = 63
+MINIMUM_COVERAGE = 66
 
 if ENV['COVERAGE']
   require 'simplecov'
