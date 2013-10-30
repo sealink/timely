@@ -23,19 +23,19 @@ describe Date do
 
   describe 'giving a time on that date' do
     it 'should accept hour, minute, and second' do
-      lambda { @date.at_time(@hour, @minute, @second) }.should_not raise_error(ArgumentError)
+      expect { @date.at_time(@hour, @minute, @second) }.to_not raise_error
     end
 
     it 'should accept hour and minute' do
-      lambda { @date.at_time(@hour, @minute) }.should_not raise_error(ArgumentError)
+      expect { @date.at_time(@hour, @minute) }.to_not raise_error
     end
 
     it 'should accept hour' do
-      lambda { @date.at_time(@hour) }.should_not raise_error(ArgumentError)
+      expect { @date.at_time(@hour) }.to_not raise_error
     end
 
     it 'should accept no arguments' do
-      lambda { @date.at_time }.should_not raise_error(ArgumentError)
+      expect { @date.at_time }.to_not raise_error
     end
 
     it 'should return a time for the given hour, minute, and second if all three are specified' do
@@ -59,7 +59,7 @@ describe Date do
     end
 
     it 'should accept a time' do
-      lambda { @date.at_time(Time.now) }.should_not raise_error(ArgumentError)
+      expect { @date.at_time(Time.now) }.to_not raise_error
     end
 
     it 'should return the passed-in time on the date' do

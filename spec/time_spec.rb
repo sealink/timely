@@ -34,11 +34,11 @@ describe Time do
 
   describe 'giving that time on a date' do
     it 'should accept year, month and day' do
-      lambda { @time.on_date(@year, @month, @day) }.should_not raise_error(ArgumentError)
+      expect { @time.on_date(@year, @month, @day) }.to_not raise_error
     end
 
     it 'should require year, month, and day' do
-      lambda { @time.on_date(@year, @month) }.should raise_error(ArgumentError)
+      expect { @time.on_date(@year, @month) }.to raise_error(ArgumentError)
     end
 
     it 'should return the same time on the specified year, month, and day' do
@@ -47,7 +47,7 @@ describe Time do
     end
 
     it 'should accept a date' do
-      lambda { @time.on_date(Date.today) }.should_not raise_error(ArgumentError)
+      expect { @time.on_date(Date.today) }.to_not raise_error
     end
 
     it 'should return the same time on the specified date' do
