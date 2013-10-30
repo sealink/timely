@@ -45,7 +45,7 @@ module Timely
     end
     alias_method :duration, :number_of_nights
 
-    def to_s(fmt = '%b %Y', date_fmt = '%d-%m-%Y')
+    def to_s(fmt = '%b %Y', date_fmt = '%Y-%m-%d')
       Timely::DateRange.to_s(first, last, fmt, date_fmt)
     end
 
