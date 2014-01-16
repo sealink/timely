@@ -32,7 +32,7 @@ module Timely
     module DateHelper
       def calendar(object_name, method, options = {})
         value = options[:object] || Timely.current_date
-        calendar_tag("#{object_name}[#{method}]", value, options.merge(:id => "#{object_name}_#{method}"))
+        calendar_tag("#{object_name}[#{method}]", value, options)
       end
     end
 
