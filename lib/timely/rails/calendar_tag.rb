@@ -10,8 +10,7 @@ module Timely
       def calendar_tag(name, value = Timely.current_date, *args)
         options = args.extract_options!
 
-        date_format = '%d-%m-%Y'
-        value = value.strftime(date_format) if value.respond_to?(:day)
+        value = value.to_s(:short) if value.respond_to?(:day)
 
         name = name.to_s if name.is_a?(Symbol)
 
