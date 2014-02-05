@@ -38,7 +38,8 @@ module Timely
 
     module FormBuilder
       def calendar(method, options = {})
-        @template.calendar(@object_name, method, options.merge(:object => @object.send(method)))
+        options[:object] = @object.send(method) unless options.key?(:object)
+        @template.calendar(@object_name, method, options)
       end
     end
   end
