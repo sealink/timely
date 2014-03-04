@@ -3,9 +3,9 @@ module Timely
     # Where is this used... so far only in one place, _date_range.html.haml
     # May be good to refactor this as well, after the class behaviour is refactored.
     INTERVALS = [
-      {:code => 'w', :name => 'week(s)', :description =>
+      {:code => 'week', :name => 'week(s)', :description =>
           'Weekdays selected will be chosen every {{n}} weeks for the date range'},
-      {:code => 'wom', :name => 'week of month', :description =>
+      {:code => 'week_of_month', :name => 'week of month', :description =>
           'Weekdays selected will be chosen in their {{ord}} occurance every month,
           e.g. if wednesday and thursday are selected, the first wednesday and
           first thursday are selected. Note: this may mean the booking is copied
@@ -72,12 +72,12 @@ module Timely
         all_days.select do |date|
           if @weekdays.has_day?(date.wday)
             case @interval[:unit]
-            when 'w'
+            when 'week'
               # 0 = first week, 1 = second week, 2 = third week, etc.
               nth_week = (date - @from).to_i / 7
               # true every 2nd week (0, 2, 4, 6, etc.)
               (nth_week % @interval[:level].to_i).zero?
-            when 'wom'
+            when 'week_of_month'
               week = @interval[:level].to_i
               (date.mday > (week-1)*7 && date.mday <= week*7)
             end

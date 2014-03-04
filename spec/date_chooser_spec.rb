@@ -58,7 +58,7 @@ describe Timely::DateChooser do
   it "returns every sunday correctly" do
     Timely::DateChooser.new(
       :multiple_dates => true, :select => 'weekdays', :from => @from, :to => @to,
-      :interval => {:level => "1", :unit => "w"}, :weekdays => {:sun => true}
+      :interval => {:level => "1", :unit => "week"}, :weekdays => {:sun => true}
     ).choose_dates.should == [
       "2-01-2011", "9-01-2011", "16-01-2011", "23-01-2011", "30-01-2011",
       "06-02-2011", "13-02-2011", "20-02-2011", "27-02-2011"
@@ -68,7 +68,7 @@ describe Timely::DateChooser do
   it "returns every thursday and sunday correctly" do
     Timely::DateChooser.new(
       :multiple_dates => true, :select => 'weekdays',
-      :interval => {:level => "1", :unit => "w"},
+      :interval => {:level => "1", :unit => "week"},
       :weekdays => {:sun => true, :thu => true}, :from => @from, :to => @to
     ).choose_dates.should == [
       "2-01-2011", "6-01-2011", "9-01-2011", "13-01-2011", "16-01-2011",
@@ -81,7 +81,7 @@ describe Timely::DateChooser do
   it "returns every 2nd thursday and sunday correctly" do
     Timely::DateChooser.new(
       :multiple_dates => true, :select => 'weekdays',
-      :interval => {:level => "2", :unit => "w"},
+      :interval => {:level => "2", :unit => "week"},
       :weekdays => {:sun => "1", :thu => "1"}, :from => @from, :to => @to
     ).choose_dates.should == [
       "2-01-2011", "6-01-2011", "16-01-2011", "20-01-2011", "30-01-2011",
@@ -93,14 +93,14 @@ describe Timely::DateChooser do
   it "returns every 1st Tuesday" do
     Timely::DateChooser.new(
       :multiple_dates => true, :select => 'weekdays', :from => @from, :to => @to,
-      :interval => {:level => "1", :unit => "wom"}, :weekdays => {:tue => true}
+      :interval => {:level => "1", :unit => "week_of_month"}, :weekdays => {:tue => true}
     ).choose_dates.should == ["4-01-2011", "1-02-2011", "1-03-2011"].map(&:to_date)
   end
 
   it "returns every 3st Monday and Friday" do
     Timely::DateChooser.new(
       :multiple_dates => true, :select => 'weekdays',
-      :interval => {:level => "3", :unit => "wom"},
+      :interval => {:level => "3", :unit => "week_of_month"},
       :weekdays => {:mon => true, :fri => true}, :from => @from, :to => @to
     ).choose_dates.should == [
       "17-01-2011", "21-01-2011", "18-02-2011", "21-02-2011"
