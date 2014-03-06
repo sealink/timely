@@ -27,6 +27,7 @@ describe Timely::DateRange do
     Timely::DateRange.new('2000-01-04'.to_date, '2000-01-06'.to_date).to_s.should == '2000-01-04 to 2000-01-06 (inclusive)'
     Timely::DateRange.new('2000-01-01'.to_date, '2000-05-31'.to_date).to_s.should == 'Jan 2000 to May 2000'
     Timely::DateRange.new('2000-01-01'.to_date, '2000-01-31'.to_date).to_s.should == 'Jan 2000'
+    Date::DATE_FORMATS[:short] = '%Y-%m-%d'
     Timely::DateRange.to_s('2000-01-01'.to_date, nil).should == 'on or after 2000-01-01'
     Timely::DateRange.to_s(nil, '2000-01-31'.to_date).should == 'on or before 2000-01-31'
     Timely::DateRange.to_s(nil, nil).should == 'no date range'

@@ -1,3 +1,5 @@
+require 'date' # Ensure Date class is loaded for old rubies (1.8)
+
 module Timely
   class DateRange < ::Range
     def initialize(*args)
@@ -49,7 +51,7 @@ module Timely
       Timely::DateRange.to_s(first, last, fmt, date_fmt)
     end
 
-    def self.to_s(first = nil, last = nil, fmt = '%b %Y', date_fmt = '%Y-%m-%d')
+    def self.to_s(first = nil, last = nil, fmt = '%b %Y', date_fmt = default_date_format)
       if first && last
         if first == last
           first.strftime(date_fmt)
@@ -69,6 +71,15 @@ module Timely
       else
         "no date range"
       end
+    end
+
+
+    private
+
+    def self.default_date_format
+      # ::Date as we want Ruby's Date not Timely::Date
+      date_format = ::Date::DATE_FORMATS[:short] if ::Date.const_defined?('DATE_FORMATS')
+      date_format || '%Y-%m-%d'
     end
   end
 end
