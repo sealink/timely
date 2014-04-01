@@ -116,13 +116,14 @@ module Timely
       # Fix the time units inconsistency problem
       # e.g.: a year isn't exactly 12 months, it's a little bit more, but it is commonly considered to be equal to 12 months
       def fix_frequency
-        if frequency.duration > 12.months
-          if intervals.all? { |i| i.first_datetime.month == i.last_datetime.month && i.first_datetime.day == i.last_datetime.day }
-            frequency.duration = (frequency.duration / 12.months).floor.years
-          end
-        elsif frequency.duration > 1.month && frequency.duration < 12.months
+        return unless frequency.duration > 1.month
+        if frequency.duration < 12.months
           if intervals.all? { |i| i.first_datetime.day == i.last_datetime.day }
             frequency.duration = frequency.units[:months].months
+          end
+        else
+          if intervals.all? { |i| i.first_datetime.month == i.last_datetime.month && i.first_datetime.day == i.last_datetime.day }
+            frequency.duration = (frequency.duration / 12.months).floor.years
           end
         end
       end
