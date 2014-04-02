@@ -28,22 +28,17 @@ module Timely
       end
 
       def first_datetime
-        interval.first_datetime
+        surrounding_interval.first_datetime
       end
 
       def last_datetime
-        interval.last_datetime
+        surrounding_interval.last_datetime
       end
 
-      def interval
-        first_datetime = nil
-        last_datetime = nil
-        intervals.each do |i|
-          first_datetime = i.first_datetime if first_datetime.nil? || i.first_datetime < first_datetime
-          last_datetime = i.last_datetime if last_datetime.nil? || i.last_datetime > last_datetime
-        end
-        Interval.new(first_datetime, last_datetime)
+      def surrounding_interval
+        Interval.surrounding(intervals)
       end
+      alias_method :interval, :surrounding_interval # backwards compatibility
 
       def match?(datetimes)
         datetimes = Array.wrap(datetimes).map(&:to_datetime)
@@ -88,30 +83,25 @@ module Timely
         patterns_strings = if multiple_dates_intervals.empty?
           single_date_intervals.map(&:to_s)
         else
-          multiple_dates_intervals_first_datetime = nil
-          multiple_dates_intervals_last_datetime = nil
-          multiple_dates_intervals.each do |i|
-            multiple_dates_intervals_first_datetime = i.first_datetime if multiple_dates_intervals_first_datetime.nil? || i.first_datetime < multiple_dates_intervals_first_datetime
-            multiple_dates_intervals_last_datetime = i.last_datetime if multiple_dates_intervals_last_datetime.nil? || i.last_datetime > multiple_dates_intervals_last_datetime
-          end
-          multiple_dates_interval = Interval.new(multiple_dates_intervals_first_datetime, multiple_dates_intervals_last_datetime)
+          interval_surrounding_multiple_dates = Interval.surrounding(multiple_dates_intervals)
+
           multiple_dates_intervals_string = case frequency.unit
           when :years
-            "every #{multiple_dates_intervals.map { |i| "#{i.first_datetime.day.ordinalize} of #{i.first_datetime.strftime('%B')}" }.uniq.to_sentence} #{multiple_dates_interval}"
+            "every #{multiple_dates_intervals.map { |i| "#{i.first_datetime.day.ordinalize} of #{i.first_datetime.strftime('%B')}" }.uniq.to_sentence} #{interval_surrounding_multiple_dates}"
           when :months
-            "every #{multiple_dates_intervals.map { |i| i.first_datetime.day.ordinalize }.uniq.to_sentence} of the month #{multiple_dates_interval}"
+            "every #{multiple_dates_intervals.map { |i| i.first_datetime.day.ordinalize }.uniq.to_sentence} of the month #{interval_surrounding_multiple_dates}"
           when :weeks
             weekdays = multiple_dates_intervals.map { |i| i.first_datetime.strftime('%A') }.uniq
             if weekdays.count == 7
-              "every day #{multiple_dates_interval}"
+              "every day #{interval_surrounding_multiple_dates}"
             else
-              "every #{weekdays.to_sentence} #{multiple_dates_interval}"
+              "every #{weekdays.to_sentence} #{interval_surrounding_multiple_dates}"
             end
           when :days
             if multiple_dates_intervals.any? { |i| i.first_datetime != i.first_datetime.beginning_of_day }
-              "every day at #{multiple_dates_intervals.map { |i| i.first_datetime.strftime("%I:%M %p") }.to_sentence} #{multiple_dates_interval}"
+              "every day at #{multiple_dates_intervals.map { |i| i.first_datetime.strftime("%I:%M %p") }.to_sentence} #{interval_surrounding_multiple_dates}"
             else
-              "every day #{multiple_dates_interval}"
+              "every day #{interval_surrounding_multiple_dates}"
             end
           else
             "#{frequency} #{multiple_dates_intervals.map(&:to_s).to_sentence}"
@@ -126,13 +116,14 @@ module Timely
       # Fix the time units inconsistency problem
       # e.g.: a year isn't exactly 12 months, it's a little bit more, but it is commonly considered to be equal to 12 months
       def fix_frequency
-        if frequency.duration > 12.months
-          if intervals.all? { |i| i.first_datetime.month == i.last_datetime.month && i.first_datetime.day == i.last_datetime.day }
-            frequency.duration = (frequency.duration / 12.months).floor.years
-          end
-        elsif frequency.duration > 1.month && frequency.duration < 12.months
+        return unless frequency.duration > 1.month
+        if frequency.duration < 12.months
           if intervals.all? { |i| i.first_datetime.day == i.last_datetime.day }
             frequency.duration = frequency.units[:months].months
+          end
+        else
+          if intervals.all? { |i| i.first_datetime.month == i.last_datetime.month && i.first_datetime.day == i.last_datetime.day }
+            frequency.duration = (frequency.duration / 12.months).floor.years
           end
         end
       end

@@ -3,6 +3,16 @@ module Timely
     class Interval
       attr_accessor :first_datetime, :last_datetime
 
+      def self.surrounding(intervals)
+        first_datetime = nil
+        last_datetime = nil
+        intervals.each do |i|
+          first_datetime = i.first_datetime if first_datetime.nil? || i.first_datetime < first_datetime
+          last_datetime = i.last_datetime if last_datetime.nil? || i.last_datetime > last_datetime
+        end
+        new(first_datetime, last_datetime)
+      end
+
       def initialize(first_datetime, last_datetime = nil)
         self.first_datetime = first_datetime
         self.last_datetime = last_datetime || first_datetime
