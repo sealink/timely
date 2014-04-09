@@ -60,10 +60,12 @@ module Timely
       def join(other)
         return nil unless self.frequency == other.frequency
 
-        expanded_datetimes = self.datetimes.map do |datetimes|
-          datetimes.unshift(datetimes.first - frequency.duration)
-          datetimes << (datetimes.last + frequency.duration)
-        end
+        expanded_datetimes = self.datetimes.map { |datetimes_within_an_interval|
+          back_one    = datetimes_within_an_interval.first - frequency.duration
+          forward_one = datetimes_within_an_interval.last + frequency.duration
+
+          [back_one] + datetimes_within_an_interval + [forward_one]
+        }
 
         joint_ranges = []
 
