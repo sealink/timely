@@ -11,6 +11,7 @@ module Timely
         fix_frequency
       end
 
+      # Convert each interval to a list of datetimes
       def datetimes
         intervals.map do |interval|
           datetimes = []
@@ -57,6 +58,7 @@ module Timely
         self.intervals.count <=> other.intervals.count
       end
 
+      # Join with other IF same frequency AND same number of intervals
       def join(other)
         return nil unless self.frequency == other.frequency
 
@@ -69,14 +71,36 @@ module Timely
 
         joint_ranges = []
 
-        other.datetimes.each do |other_datetimes|
-          joinable_datetimes = expanded_datetimes.find { |ed| other_datetimes.any? { |d| ed.include?(d) } }
+        # Look for overlaps, where an overlap may be 'off by 1' -- hence the 'expanded_datetimes'
+        # ...but start with other and join to each of it's intervals.
+        #
+        # Remember that 'pattern.datetimes' returns a list of datetimes per interval
+        other.datetimes.each do |other_datetimes_within_an_interval|
+
+          joinable_datetimes = expanded_datetimes.find { |expanded_datetimes_within_an_interval|
+            other_datetimes_within_an_interval.any? { |d|
+              expanded_datetimes_within_an_interval.include?(d)
+            }
+          }
           break unless joinable_datetimes
 
-          joint_datetimes = (other_datetimes + joinable_datetimes[1...-1]).sort
+          # Joint ranges should be those that overlap
+          #
+          # This is buggy, because joinable_datetimes is a list of datetimes per interval that overlap
+          # Excluding the first doesn't make sense
+          #
+          # Instead, we should exclude the first AND last for each element within joinable_datetimes 
+          joint_datetimes = (other_datetimes_within_an_interval + joinable_datetimes[1...-1]).sort
           joint_ranges << (joint_datetimes.first..joint_datetimes.last)
         end
 
+        # This seems to be trying to say "Only join when we got one for each interval of self"
+        # ...it also seems too restrictive...
+        #
+        # What if other includes multiple intervals of self?
+        # Then we don't need same number of intervals
+        #
+        # Also might be wrong in other ways, it's tricky to tell
         if joint_ranges.size == self.intervals.size
           Pattern.new(joint_ranges, frequency.duration)
         end
