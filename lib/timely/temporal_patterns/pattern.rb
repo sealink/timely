@@ -58,23 +58,25 @@ module Timely
       end
 
       def join(other)
-        if self.frequency == other.frequency
-          expanded_datetimes = self.datetimes.map do |datetimes|
-            datetimes.unshift(datetimes.first - frequency.duration)
-            datetimes << (datetimes.last + frequency.duration)
-          end
-          joint_ranges = []
-          other.datetimes.each do |datetimes|
-            if joinable_datetimes = expanded_datetimes.find { |ed| datetimes.any? { |d| ed.include?(d) } }
-              joint_datetimes = (datetimes + joinable_datetimes[1...-1]).sort
-              joint_ranges << (joint_datetimes.first..joint_datetimes.last)
-            else
-              break
-            end
-          end
-          unless joint_ranges.size != self.intervals.size
-            Pattern.new(joint_ranges, frequency.duration)
-          end
+        return nil unless self.frequency == other.frequency
+
+        expanded_datetimes = self.datetimes.map do |datetimes|
+          datetimes.unshift(datetimes.first - frequency.duration)
+          datetimes << (datetimes.last + frequency.duration)
+        end
+
+        joint_ranges = []
+
+        other.datetimes.each do |other_datetimes|
+          joinable_datetimes = expanded_datetimes.find { |ed| other_datetimes.any? { |d| ed.include?(d) } }
+          break unless joinable_datetimes
+
+          joint_datetimes = (other_datetimes + joinable_datetimes[1...-1]).sort
+          joint_ranges << (joint_datetimes.first..joint_datetimes.last)
+        end
+
+        if joint_ranges.size == self.intervals.size
+          Pattern.new(joint_ranges, frequency.duration)
         end
       end
 
