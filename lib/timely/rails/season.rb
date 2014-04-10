@@ -1,6 +1,12 @@
 module Timely
   class Season < ActiveRecord::Base
-    has_many :date_groups, :order => :start_date, :dependent => :destroy, :class_name => 'Timely::DateGroup'
+
+    if ::ActiveRecord::VERSION::MAJOR >= 4
+      has_many :date_groups, lambda { order(:start_date) }, :dependent => :destroy, :class_name => 'Timely::DateGroup'
+    else
+      has_many :date_groups, :order => :start_date, :dependent => :destroy, :class_name => 'Timely::DateGroup'
+    end
+
 
     accepts_nested_attributes_for :date_groups,
       :reject_if => proc {|attributes| attributes['start_date'].blank?},
