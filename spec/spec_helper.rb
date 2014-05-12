@@ -9,6 +9,8 @@ require 'rubygems'
 require 'bundler/setup'
 require 'active_record'
 
+I18n.enforce_available_locales = true
+
 MINIMUM_COVERAGE = 66
 
 if ENV['COVERAGE']
