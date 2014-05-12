@@ -14,9 +14,9 @@ matrix:
   exclude:
     - rvm: 1.9.3
       gemfile: gemfiles/rails2.gemfile
-    - rvm: 2.0.0
+    - rvm: 2.0
       gemfile: gemfiles/rails2.gemfile
-    - rvm: 2.1.0
+    - rvm: 2.1
       gemfile: gemfiles/rails2.gemfile
     - rvm: 1.8.7
       gemfile: gemfiles/rails4.gemfile
