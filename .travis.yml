@@ -3,7 +3,8 @@ rvm:
   - 1.8.7
   - 1.9.2
   - 1.9.3
-  - 2.0.0
+  - 2.0
+  - 2.1
 script: "bundle exec rake coverage"
 gemfile:
   - gemfiles/rails2.gemfile
@@ -14,6 +15,8 @@ matrix:
     - rvm: 1.9.3
       gemfile: gemfiles/rails2.gemfile
     - rvm: 2.0.0
+      gemfile: gemfiles/rails2.gemfile
+    - rvm: 2.1.0
       gemfile: gemfiles/rails2.gemfile
     - rvm: 1.8.7
       gemfile: gemfiles/rails4.gemfile
