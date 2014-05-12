@@ -10,7 +10,6 @@ Gem::Specification.new do |spec|
   spec.email         = ["support@travellink.com.au"]
   spec.description   = %q{Set of time, date, weekday related methods.}
   spec.summary       = %q{Set of time, date, weekday related methods.}
-  spec.homepage      = ""
   spec.homepage      = 'http://github.com/sealink/timely'
 
   spec.license       = "MIT"
