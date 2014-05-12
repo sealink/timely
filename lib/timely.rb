@@ -1,6 +1,4 @@
 module Timely
-  VERSION = '0.0.2'
-
   require 'time'
   require 'date'
 
