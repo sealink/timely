@@ -9,7 +9,7 @@ describe Timely::ActionViewHelpers do
   let(:string) { double(:string) }
   let(:date) { Date.new(2000, 12, 25) }
   before {
-    date.should_receive(:to_s).with(:short).and_return('25-12-2000')
+    date.should_receive(:to_s).with(:calendar).and_return('25-12-2000')
     Timely.stub(:current_date).and_return(date)
   }
 
