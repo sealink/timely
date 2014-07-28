@@ -7,6 +7,7 @@
 
 require 'rubygems'
 require 'bundler/setup'
+require 'rspec/its'
 require 'active_record'
 
 I18n.enforce_available_locales = true if I18n.respond_to? :enforce_available_locales=
@@ -50,7 +51,6 @@ ActiveRecord::Base.establish_connection :adapter => 'sqlite3', :database => DB_F
 load('spec/schema.rb')
 
 RSpec.configure do |config|
-  config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
 end

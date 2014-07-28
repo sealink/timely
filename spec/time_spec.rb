@@ -5,17 +5,17 @@ describe Time do
     xmas = Date.new(2012, 12, 25)
     lunch_time = Time.parse("12:00")
     xmas_lunch = lunch_time.on_date(xmas)
-    xmas_lunch.year.should == 2012
-    xmas_lunch.month.should == 12
-    xmas_lunch.day.should == 25
-    xmas_lunch.hour.should == 12
-    xmas_lunch.min.should == 0
-    xmas_lunch.sec.should == 0
+    expect(xmas_lunch.year).to eq 2012
+    expect(xmas_lunch.month).to eq 12
+    expect(xmas_lunch.day).to eq 25
+    expect(xmas_lunch.hour).to eq 12
+    expect(xmas_lunch.min).to eq 0
+    expect(xmas_lunch.sec).to eq 0
   end
 
   it "should allow setting the date part given a date" do
     time = Time.parse("2010-01-01 09:30:00")
-    time.on_date(Date.parse("2012-12-31")).should eql Time.parse("2012-12-31 09:30:00")
+    expect(time.on_date(Date.parse("2012-12-31"))).to eq Time.parse("2012-12-31 09:30:00")
   end
 end
 
@@ -29,7 +29,7 @@ describe Time do
   end
 
   it 'should give that time on a date' do
-    @time.should respond_to(:on_date)
+    expect(@time).to respond_to(:on_date)
   end
 
   describe 'giving that time on a date' do
@@ -43,7 +43,7 @@ describe Time do
 
     it 'should return the same time on the specified year, month, and day' do
       expected = Time.local(@year, @month, @day, @time.hour, @time.min, @time.sec)
-      @time.on_date(@year, @month, @day).should == expected
+      expect(@time.on_date(@year, @month, @day)).to eq expected
     end
 
     it 'should accept a date' do
@@ -53,12 +53,12 @@ describe Time do
     it 'should return the same time on the specified date' do
       @date = Date.today - 2345
       expected = Time.local(@date.year, @date.month, @date.day, @time.hour, @time.min, @time.sec)
-      @time.on_date(@date).should == expected
+      expect(@time.on_date(@date)).to eq expected
     end
   end
 
   it "should provide 'on' as an alias" do
     expected = Time.local(@year, @month, @day, @time.hour, @time.min, @time.sec)
-    @time.on(@year, @month, @day).should == expected
+    expect(@time.on(@year, @month, @day)).to eq expected
   end
 end

@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Date do
   it 'should determine if date between' do
-    Date.today.between?(nil, nil).should == true
-    Date.today.between?(Date.today - 1, Date.today - 1).should == false
-    Date.today.between?(Date.today - 1, nil).should == true
+    expect(Date.today.between?(nil, nil)).to be true
+    expect(Date.today.between?(Date.today - 1, Date.today - 1)).to be false
+    expect(Date.today.between?(Date.today - 1, nil)).to be true
   end
 end
 
@@ -18,7 +18,7 @@ describe Date do
   end
 
   it 'should give a time on that date' do
-    @date.should respond_to(:at_time)
+    expect(@date).to respond_to(:at_time)
   end
 
   describe 'giving a time on that date' do
@@ -40,22 +40,22 @@ describe Date do
 
     it 'should return a time for the given hour, minute, and second if all three are specified' do
       expected = Time.local(@date.year, @date.month, @date.day, @hour, @minute, @second)
-      @date.at_time(@hour, @minute, @second).should == expected
+      expect(@date.at_time(@hour, @minute, @second)).to eq expected
     end
 
     it 'should default second to 0 if unspecified' do
       expected = Time.local(@date.year, @date.month, @date.day, @hour, @minute, 0)
-      @date.at_time(@hour, @minute).should == expected
+      expect(@date.at_time(@hour, @minute)).to eq expected
     end
 
     it 'should default minute to 0 if unspecified' do
       expected = Time.local(@date.year, @date.month, @date.day, @hour, 0, 0)
-      @date.at_time(@hour).should == expected
+      expect(@date.at_time(@hour)).to eq expected
     end
 
     it 'should default hour to 0 if unspecified' do
       expected = Time.local(@date.year, @date.month, @date.day, 0, 0, 0)
-      @date.at_time.should == expected
+      expect(@date.at_time).to eq expected
     end
 
     it 'should accept a time' do
@@ -65,12 +65,12 @@ describe Date do
     it 'should return the passed-in time on the date' do
       @time = Time.now - 12345
       expected = Time.local(@date.year, @date.month, @date.day, @time.hour, @time.min, @time.sec)
-      @date.at_time(@time).should == expected
+      expect(@date.at_time(@time)).to eq expected
     end
   end
 
   it "should provide 'at' as an alias" do
     expected = Time.local(@date.year, @date.month, @date.day, @hour, @minute, @second)
-    @date.at(@hour, @minute, @second).should == expected
+    expect(@date.at(@hour, @minute, @second)).to eq expected
   end
 end

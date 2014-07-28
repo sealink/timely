@@ -20,13 +20,13 @@ describe Timely::Extensions do
     o = TimelyExtensionsTestSeasonal.new
     o.season = season
     o.save!
-    o.boundary_start.should == Date.current - 1
-    o.boundary_end.should   == Date.current + 2
+    expect(o.boundary_start).to eq Date.current - 1
+    expect(o.boundary_end  ).to eq Date.current + 2
 
-    TimelyExtensionsTestSeasonal.season_on(Date.current + 3).should be_empty
-    TimelyExtensionsTestSeasonal.season_on(Date.current + 2).should == [o]
-    TimelyExtensionsTestSeasonal.season_on(Date.current - 1).should == [o]
-    TimelyExtensionsTestSeasonal.season_on(Date.current - 2).should be_empty
+    expect(TimelyExtensionsTestSeasonal.season_on(Date.current + 3)).to be_empty
+    expect(TimelyExtensionsTestSeasonal.season_on(Date.current + 2)).to eq [o]
+    expect(TimelyExtensionsTestSeasonal.season_on(Date.current - 1)).to eq [o]
+    expect(TimelyExtensionsTestSeasonal.season_on(Date.current - 2)).to be_empty
 
   end
 end

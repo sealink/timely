@@ -9,13 +9,13 @@ describe Timely::ActionViewHelpers do
   let(:string) { double(:string) }
   let(:date) { Date.new(2000, 12, 25) }
   before {
-    date.should_receive(:to_s).with(:calendar).and_return('25-12-2000')
-    Timely.stub(:current_date).and_return(date)
+    expect(date).to receive(:to_s).with(:calendar).and_return('25-12-2000')
+    expect(Timely).to receive(:current_date).and_return(date)
   }
 
   it 'should generate calendar tags' do
-    string.should_receive(:html_safe)
-    subject.should_receive(:tag).with(:input,
+    expect(string).to receive(:html_safe)
+    expect(subject).to receive(:tag).with(:input,
       :id    => 'test',
       :class => 'datepicker input-small',
       :size  => 10,

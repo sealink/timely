@@ -17,16 +17,16 @@ describe Timely::Season, "in general" do
     low_season_date = '2009-02-22'.to_date
     high_season_date = '2009-04-22'.to_date
 
-    @simple_low_season.includes_date?(low_season_date).should be_true
-    @simple_high_season.includes_date?(low_season_date).should_not be_true
+    expect(@simple_low_season.includes_date?(low_season_date)).to be true
+    expect(@simple_high_season.includes_date?(low_season_date)).to_not be true
 
-    @simple_low_season.includes_date?(high_season_date).should_not be_true
-    @simple_high_season.includes_date?(high_season_date).should be_true
+    expect(@simple_low_season.includes_date?(high_season_date)).to_not be true
+    expect(@simple_high_season.includes_date?(high_season_date)).to be true
   end
 
   it "should be able to tell the boundary range (the range including the absolute first and last date) of itself" do
-    @simple_low_season.boundary_range.should eql('2009-01-01'.to_date..'2009-09-30'.to_date)
-    @simple_high_season.boundary_range.should eql('2009-04-01'.to_date..'2009-12-31'.to_date)
+    expect(@simple_low_season.boundary_range).to eq('2009-01-01'.to_date..'2009-09-30'.to_date)
+    expect(@simple_high_season.boundary_range).to eq('2009-04-01'.to_date..'2009-12-31'.to_date)
   end
 end
 
@@ -36,13 +36,13 @@ describe Timely::Season, 'when asked to build season for given dates' do
 
   context 'when three dates' do
     let(:dates) { [Date.current + 1, Date.current + 4, Date.current + 5] }
-    its(:class) { should == Timely::Season }
-    it { should have(3).date_groups }
+    its(:class) { should eq Timely::Season }
+    its('date_groups.size') { should eq 3 }
 
     it "should generate proper date groups" do
-      season.date_groups.first.start_date.should == (Date.current + 1)
-      season.date_groups.last.start_date.should == (Date.current + 5)
-      season.date_groups.last.end_date.should == (Date.current + 5)
+      expect(season.date_groups.first.start_date).to eq (Date.current + 1)
+      expect(season.date_groups.last.start_date).to eq (Date.current + 5)
+      expect(season.date_groups.last.end_date).to eq (Date.current + 5)
     end
   end
 
