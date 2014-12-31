@@ -51,23 +51,26 @@ module Timely
       Timely::DateRange.to_s(first, last, fmt, date_fmt)
     end
 
-    def self.to_s(first = nil, last = nil, fmt = '%b %Y', date_fmt = default_date_format)
+    def self.to_s(first = nil, last = nil, month_fmt = '%b %Y', date_fmt = default_date_format, time_fmt = nil)
+      time_fmt ||= date_fmt + ' %H:%M'
+      is_date = first.is_a?(Date) || last.is_a?(Date)
+      fmt = is_date ? date_fmt : time_fmt
       if first && last
         if first == last
-          first.strftime(date_fmt)
+          first.strftime(fmt)
         elsif first == first.at_beginning_of_month && last == last.at_end_of_month
           if first.month == last.month
-            first.strftime(fmt)
+            first.strftime(month_fmt)
           else
-            "#{first.strftime(fmt)} to #{last.strftime(fmt)}"
+            "#{first.strftime(month_fmt)} to #{last.strftime(month_fmt)}"
           end
         else
-          "#{first.strftime(date_fmt)} to #{last.strftime(date_fmt)} (inclusive)"
+          "#{first.strftime(fmt)} to #{last.strftime(fmt)}#{" (inclusive)" if is_date}"
         end
       elsif first
-        "on or after #{first.strftime(date_fmt)}"
+        "on or after #{first.strftime(fmt)}"
       elsif last
-        "on or before #{last.strftime(date_fmt)}"
+        "on or before #{last.strftime(fmt)}"
       else
         "no date range"
       end

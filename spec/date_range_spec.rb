@@ -33,6 +33,17 @@ describe Timely::DateRange do
     expect(Timely::DateRange.to_s(nil, nil)).to eq 'no date range'
   end
 
+  let(:fourth) { '2000-01-04'.to_date }
+  let(:fifth)  { '2000-01-05'.to_date }
+  let(:sixth)  { '2000-01-06'.to_date }
+
+  it 'should print a readable version of time between two times' do
+    expect(Timely::DateRange.to_s(fourth.at(9, 30), sixth.at(4, 20)))
+      .to eq '2000-01-04 09:30 to 2000-01-06 04:20'
+    expect(Timely::DateRange.to_s(fourth.at(9, 30)))
+      .to eq 'on or after 2000-01-04 09:30'
+  end
+
   it 'should handle params' do
     today = Timely::DateRange.from_params('2000-01-04')
     expect(today.first).to eq '2000-01-04'.to_date
