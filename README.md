@@ -3,8 +3,8 @@ Timely
 
 [![Build Status](https://travis-ci.org/sealink/timely.png?branch=master)](https://travis-ci.org/sealink/timely)
 [![Coverage Status](https://coveralls.io/repos/sealink/timely/badge.png)](https://coveralls.io/r/sealink/timely)
-[![Build Status](https://gemnasium.com/sealink/timely.png?travis)](https://gemnasium.com/sealink/timely)
-[![Build Status](https://codeclimate.com/github/sealink/timely.png)](https://codeclimate.com/github/sealink/timely)
+[![Dependency Status](https://gemnasium.com/sealink/timely.png?travis)](https://gemnasium.com/sealink/timely)
+[![Code Climate](https://codeclimate.com/github/sealink/timely.png)](https://codeclimate.com/github/sealink/timely)
 
 # DESCRIPTION
 
