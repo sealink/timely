@@ -13,9 +13,9 @@ module Timely
         method_name = attribute.to_s
         method_name += '_time' unless attribute.to_s.ends_with?('time')
         method_name += '_of_day'
-        define_method method_name, -> {
+        define_method method_name, lamda do
           TimeOfDay.from_time(read_attribute attribute)
-        }
+        end
       end
     end
   end
