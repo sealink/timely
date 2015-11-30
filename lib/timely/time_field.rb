@@ -6,14 +6,16 @@ module Timely
 
     module ClassMethods
       def time_fields(*attributes)
-        attributes.each do |attribute|
-          method_name = if attribute.to_s.ends_with?('time')
-            attribute.to_s + '_of_day'
-          else
-            attribute.to_s + '_time_of_day'
-          end
-          self.send :define_method, method_name, -> { TimeOfDay.from_time(self.read_attribute attribute) }
-        end
+        attributes.each { |attribute| time_field(attribute) }
+      end
+
+      def time_field(attribute)
+        method_name = attribute.to_s
+        method_name += '_time' unless attribute.to_s.ends_with?('time')
+        method_name += '_of_day'
+        define_method method_name, -> {
+          TimeOfDay.from_time(self.read_attribute attribute)
+        }
       end
     end
   end

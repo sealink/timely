@@ -15,9 +15,8 @@ module Timely
     end
 
     def on_date(date)
-      year, month, day = date.year, date.month, date.day
       sec = 0
-      ::Time.zone.local(year, month, day, hour, minute, sec)
+      ::Time.zone.local(date.year, date.month, date.day, hour, minute, sec)
     end
 
     def to_s(format = :time12)
