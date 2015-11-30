@@ -20,8 +20,8 @@ describe Timely::TimeField do
 
   subject {
     klass.new(
-      start_time: DateTime.new(2000, 1, 1, 11, 59, 0),
-      end: DateTime.new(2000, 1, 1, 23, 59, 0)
+      start_time: DateTime.new(2000, 1, 1, 11, 59, 0).utc,
+      end: DateTime.new(2000, 1, 1, 23, 59, 0).utc
     )
   }
 

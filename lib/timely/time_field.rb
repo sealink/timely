@@ -14,7 +14,7 @@ module Timely
         method_name += '_time' unless attribute.to_s.ends_with?('time')
         method_name += '_of_day'
         define_method method_name, -> {
-          TimeOfDay.from_time(self.read_attribute attribute)
+          TimeOfDay.from_time(read_attribute attribute)
         }
       end
     end
