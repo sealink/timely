@@ -5,6 +5,8 @@ module Timely
   require 'timely/string'
   require 'timely/date'
   require 'timely/time'
+  require 'timely/time_field'
+  require 'timely/time_of_day'
   require 'timely/time_since'
   require 'timely/date_time'
   require 'timely/range'
