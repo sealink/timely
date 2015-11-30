@@ -17,6 +17,6 @@ describe Timely::TimeOfDay do
   end
 
   context 'can initialize from a time' do
-    it { should == Timely::TimeOfDay.from_time(DateTime.new(2014, 2, 3, 4, 52)) }
+    it { should == Timely::TimeOfDay.from_time(DateTime.new(2014, 2, 3, 4, 52).utc) }
   end
 end
