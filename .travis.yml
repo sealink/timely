@@ -1,7 +1,7 @@
 language: ruby
 rvm:
   - 2.2
-script: "bundle exec rake coverage"
+script: bundle exec rake rspec
 gemfile:
   - gemfiles/rails3.gemfile
   - gemfiles/rails4.gemfile
