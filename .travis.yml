@@ -8,4 +8,7 @@ gemfile:
 notifications:
   email:
     - support@travellink.com.au
-  flowdock: e69dcafad1fea15c6b8c76e9ced965af
+  flowdock:
+    secure: QC1mV/0NZwA4tU2K1BQSety/seEf7ujL3uUlddXrMm0yHp0NBMlo1tnQ7KKopSKoyoPj9M9KmfhrCdbdZXDOU57WucH+pz7Tn9Zp9VkPUMniN4rYSwkrF17vihM5NpdyDzqo5mzthVPUEV0DtlK+Uu2W4wMUpu1uKaahFzHJH6k=
+sudo: false
+cache: bundler
