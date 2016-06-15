@@ -1,6 +1,6 @@
 class Railtie < Rails::Railtie
   initializer 'timely.initialize' do
-    ActiveSupport.on_load(:active_record) do
+    ActiveSupport.on_load(:action_view) do
       require 'timely/rails'
     end
   end
