@@ -10,7 +10,7 @@ require 'bundler/setup'
 require 'rspec/its'
 require 'active_record'
 
-require 'support/coverage'
+require 'support/coverage_loader'
 
 I18n.enforce_available_locales = true if I18n.respond_to? :enforce_available_locales=
 
