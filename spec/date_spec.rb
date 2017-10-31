@@ -11,6 +11,7 @@ end
 describe Date do
   before :each do
     @date = Date.today - 5
+    Time.zone = 'Australia/Eucla'
 
     @hour   = 1
     @minute = 2
@@ -39,22 +40,22 @@ describe Date do
     end
 
     it 'should return a time for the given hour, minute, and second if all three are specified' do
-      expected = Time.local(@date.year, @date.month, @date.day, @hour, @minute, @second)
+      expected = Time.zone.local(@date.year, @date.month, @date.day, @hour, @minute, @second)
       expect(@date.at_time(@hour, @minute, @second)).to eq expected
     end
 
     it 'should default second to 0 if unspecified' do
-      expected = Time.local(@date.year, @date.month, @date.day, @hour, @minute, 0)
+      expected = Time.zone.local(@date.year, @date.month, @date.day, @hour, @minute, 0)
       expect(@date.at_time(@hour, @minute)).to eq expected
     end
 
     it 'should default minute to 0 if unspecified' do
-      expected = Time.local(@date.year, @date.month, @date.day, @hour, 0, 0)
+      expected = Time.zone.local(@date.year, @date.month, @date.day, @hour, 0, 0)
       expect(@date.at_time(@hour)).to eq expected
     end
 
     it 'should default hour to 0 if unspecified' do
-      expected = Time.local(@date.year, @date.month, @date.day, 0, 0, 0)
+      expected = Time.zone.local(@date.year, @date.month, @date.day, 0, 0, 0)
       expect(@date.at_time).to eq expected
     end
 
@@ -64,13 +65,22 @@ describe Date do
 
     it 'should return the passed-in time on the date' do
       @time = Time.now - 12345
-      expected = Time.local(@date.year, @date.month, @date.day, @time.hour, @time.min, @time.sec)
+      expected = Time.zone.local(@date.year, @date.month, @date.day, @time.hour, @time.min, @time.sec)
       expect(@date.at_time(@time)).to eq expected
     end
   end
 
-  it "should provide 'at' as an alias" do
-    expected = Time.local(@date.year, @date.month, @date.day, @hour, @minute, @second)
-    expect(@date.at(@hour, @minute, @second)).to eq expected
+  # at is only alias for non time zone override (e.g. non rails)
+  context "using at alias" do
+    it "should accept hour, minute, second" do
+      expected = Time.local(@date.year, @date.month, @date.day, @hour, @minute, @second)
+      expect(@date.at(@hour, @minute, @second)).to eq expected
+    end
+
+    it "should accept time" do
+      @time = Time.now - 12345
+      expected = Time.local(@date.year, @date.month, @date.day, @time.hour, @time.min, @time.sec)
+      expect(@date.at(@time)).to eq expected
+    end
   end
 end

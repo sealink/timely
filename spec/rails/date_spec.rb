@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Date do
   let(:date) { Date.parse("2010-01-01") }
 
-  before { Time.zone = 'Adelaide' }
+  before { Time.zone = 'Australia/Eucla' }
 
   subject(:converted) { date.to_time_in_time_zone }
 
