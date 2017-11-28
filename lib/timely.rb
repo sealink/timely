@@ -4,7 +4,6 @@ module Timely
 
   require 'timely/string'
   require 'timely/date'
-  require 'timely/time'
   require 'timely/time_since'
   require 'timely/date_time'
   require 'timely/range'
@@ -17,5 +16,5 @@ module Timely
   require 'timely/temporal_patterns/pattern'
   require 'timely/trackable_date_set'
 
-  require 'timely/railtie' if defined?(Rails::Railtie)
+  defined?(Rails::Railtie) ? require('timely/railtie') : require('timely/time')
 end

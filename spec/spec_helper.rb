@@ -14,6 +14,7 @@ require 'support/coverage_loader'
 
 I18n.enforce_available_locales = true if I18n.respond_to? :enforce_available_locales=
 
+require 'rails'
 require 'timely'
 require 'timely/rails'
 
