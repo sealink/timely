@@ -2,6 +2,7 @@
 
 ## 0.3.0
 
+* Add time zone awareness for Time#on (e.g. Rails)
 * Required Timely.load to load overrides
 
 ## 0.2.0
