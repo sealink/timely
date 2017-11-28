@@ -1,9 +1,13 @@
 require 'spec_helper'
 
+TestTime = Class.new(Time) do
+  include ::Timely::Time
+end
+
 describe Time do
   it 'should be able to set date on a time' do
     xmas = Date.new(2012, 12, 25)
-    lunch_time = Time.parse("12:00")
+    lunch_time = TestTime.parse("12:00")
     xmas_lunch = lunch_time.on_date(xmas)
     expect(xmas_lunch.year).to eq 2012
     expect(xmas_lunch.month).to eq 12
@@ -14,14 +18,14 @@ describe Time do
   end
 
   it "should allow setting the date part given a date" do
-    time = Time.parse("2010-01-01 09:30:00")
+    time = TestTime.parse("2010-01-01 09:30:00")
     expect(time.on_date(Date.parse("2012-12-31"))).to eq Time.parse("2012-12-31 09:30:00")
   end
 end
 
 describe Time do
   before :each do
-    @time = Time.now - 12345
+    @time = TestTime.now
 
     @year  = 2005
     @month = 3
