@@ -14,8 +14,3 @@ module Timely
     alias_method :on, :on_date
   end
 end
-
-class Time
-  include Timely::Time
-end
-

@@ -18,4 +18,8 @@ module Timely
   require 'timely/trackable_date_set'
 
   require 'timely/railtie' if defined?(Rails::Railtie)
+
+  def self.load
+    ::Time.send :include, Timely::Time
+  end
 end
