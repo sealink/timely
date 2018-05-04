@@ -23,7 +23,7 @@ module Timely
       }
 
       case weekdays
-      when Fixnum
+      when Integer
         # 4 -> 0000100 (binary) -> "0010000" (reversed string) -> {:tue => true}
         weekdays.to_s(2).reverse.each_char.with_index do |char, index|
           set_day(index, char == '1')
@@ -47,7 +47,7 @@ module Timely
           :sat => true
         }
       else
-        raise ArgumentError, "You must initialize with an Fixnum, Hash or Array"
+        raise ArgumentError, "You must initialize with an Integer, Hash or Array"
       end
     end
 
@@ -61,7 +61,7 @@ module Timely
     end
 
     def set_day(day, set)
-      key = if day.is_a?(Fixnum)
+      key = if day.is_a?(Integer)
         WEEKDAY_KEYS[day]
       elsif day.is_a?(String)
         day.to_sym
@@ -80,7 +80,7 @@ module Timely
     # Accepts either symbol or integer
     # e.g. :sun or 0 = Sunday, :sat or 6 = Saturday
     def has_day?(weekday)
-      weekday = WEEKDAY_KEYS[weekday] if weekday.is_a?(Fixnum)
+      weekday = WEEKDAY_KEYS[weekday] if weekday.is_a?(Integer)
       @weekdays[weekday]
     end
 
