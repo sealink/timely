@@ -2,6 +2,12 @@ language: ruby
 rvm:
   - 2.2.2
   - 2.3.0
+  - 2.4
+matrix:
+  fast_finish: true
+  exclude:
+    - rvm: 2.4
+      gemfile: gemfiles/rails3.gemfile
 script: bundle exec rake spec
 gemfile:
   - gemfiles/rails3.gemfile

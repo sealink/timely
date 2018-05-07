@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'coverage-kit'
   spec.add_development_dependency 'simplecov-rcov'
   spec.add_development_dependency 'coveralls'
+  spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'sqlite3'
   spec.add_development_dependency 'activesupport'
   spec.add_development_dependency 'activerecord'

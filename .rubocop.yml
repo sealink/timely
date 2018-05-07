@@ -1,0 +1,8 @@
+Metrics/LineLength:
+  Max: 80
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false # Using Ruby 2.4 doesn't need it

@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* Using Fixnum is deprecated
+
 ## 0.3.0
 
 * Add time zone awareness for Time#on (e.g. Rails)
