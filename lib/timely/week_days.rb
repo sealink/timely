@@ -1,6 +1,6 @@
 module Timely
   class WeekDays
-    WEEKDAY_KEYS = [:sun, :mon, :tue, :wed, :thu, :fri, :sat]
+    WEEKDAY_KEYS = %i[sun mon tue wed thu fri sat]
 
     # Create a new Weekdays object
     # weekdays can be in three formats
@@ -13,20 +13,20 @@ module Timely
     #   e.g. [1, 0, 1, 0, 0, 0, 0] is Sunday and Tuesday
     def initialize(weekdays)
       @weekdays = {
-        :sun => false,
-        :mon => false,
-        :tue => false,
-        :wed => false,
-        :thu => false,
-        :fri => false,
-        :sat => false
+        sun: false,
+        mon: false,
+        tue: false,
+        wed: false,
+        thu: false,
+        fri: false,
+        sat: false
       }
 
       case weekdays
       when Integer
         # 4 -> 0000100 (binary) -> "0010000" (reversed string) -> {:tue => true}
         weekdays.to_s(2).reverse.each_char.with_index do |char, index|
-          set_day(index, char == '1')
+          set_day(index, char == "1")
         end
       when Hash
         weekdays.each_pair do |day, value|
@@ -38,16 +38,17 @@ module Timely
         end
       when NilClass
         @weekdays = {
-          :sun => true,
-          :mon => true,
-          :tue => true,
-          :wed => true,
-          :thu => true,
-          :fri => true,
-          :sat => true
+          sun: true,
+          mon: true,
+          tue: true,
+          wed: true,
+          thu: true,
+          fri: true,
+          sat: true
         }
       else
-        raise ArgumentError, "You must initialize with an Integer, Hash or Array"
+        raise ArgumentError,
+              "You must initialize with an Integer, Hash or Array"
       end
     end
 
@@ -61,15 +62,11 @@ module Timely
     end
 
     def set_day(day, set)
-      key = if day.is_a?(Integer)
-        WEEKDAY_KEYS[day]
-      elsif day.is_a?(String)
-        day.to_sym
-      else
-        day
+      key = day_to_index(day)
+      unless WEEKDAY_KEYS.include?(key)
+        raise ArgumentError, "Invalid week day index #{key}"
       end
-      raise ArgumentError, "Invalid week day index #{key}" unless WEEKDAY_KEYS.include?(key)
-      @weekdays[key] = [true, 'true', 1, '1'].include?(set)
+      @weekdays[key] = [true, "true", 1, "1"].include?(set)
     end
 
     def applies_for_date?(date)
@@ -86,27 +83,28 @@ module Timely
 
     def number_of_occurances_in(range)
       range.inject(0) do |count, date|
-        applies_for_date?(date) ? count+1 : count
+        applies_for_date?(date) ? count + 1 : count
       end
     end
 
     # Returns true if all days are selected
     def all_days?
-      @weekdays.all?{|day, selected| selected}
+      @weekdays.all? { |_day, day_selected| day_selected }
     end
 
     # Returns array of weekday selected
     # e.g. [:sun, :sat]
     def weekdays
-      selected = @weekdays.select{|day, selected| selected}
+      selected = @weekdays.select { |_day, day_selected| day_selected }
       # Ruby 1.8 returns an array for Hash#select and loses order
-      selected.is_a?(Hash) ? selected.keys : selected.map(&:first).sort_by{|v| WEEKDAY_KEYS.index(v)}
+      return selected.keys if selected.is_a?(Hash)
+      selected.map(&:first).sort_by { |v| WEEKDAY_KEYS.index(v) }
     end
 
     # Returns comma separated and capitalized in Sun-Sat order
     # e.g. 'Mon, Tue, Wed' or 'Sat' or 'Sun, Sat'
     def to_s
-      days = weekdays.map{|day| day.to_s.capitalize}
+      days = weekdays.map { |day| day.to_s.capitalize }
       last_day = days.pop
 
       days.empty? ? last_day : days.join(", ") + ", and " + last_day
@@ -123,6 +121,18 @@ module Timely
       int
     end
 
-    ALL_WEEKDAYS = WeekDays.new(%w(1 1 1 1 1 1 1))
+    ALL_WEEKDAYS = WeekDays.new(%w[1 1 1 1 1 1 1])
+
+    private
+
+    def day_to_index(day)
+      if day.is_a?(Integer)
+        WEEKDAY_KEYS[day]
+      elsif day.is_a?(String)
+        day.to_sym
+      else
+        day
+      end
+    end
   end
 end
