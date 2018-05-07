@@ -121,8 +121,6 @@ module Timely
       int
     end
 
-    ALL_WEEKDAYS = WeekDays.new(%w[1 1 1 1 1 1 1])
-
     private
 
     def day_to_index(day)
@@ -134,5 +132,7 @@ module Timely
         day
       end
     end
+
+    ALL_WEEKDAYS = WeekDays.new(%w[1 1 1 1 1 1 1])
   end
 end
