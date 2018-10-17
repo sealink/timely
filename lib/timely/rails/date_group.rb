@@ -78,7 +78,7 @@ module Timely
     private
 
     def validate_date_range!
-      raise ArgumentError, "Incorrect date range" if start_date && end_date && (start_date > end_date)
+      raise ArgumentError, "Incorrect date range #{start_date} is before #{end_date}" if start_date && end_date && (start_date > end_date)
     end
   end
 end
