@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* [TT-4716] Better exception message when a range is invalid
+
 ## 0.3.1
 
 * Using Fixnum is deprecated
