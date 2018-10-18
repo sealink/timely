@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.3.2 Unreleased
+
+* [TT-4716] Better exception message when a range is invalid
 
 ## 0.3.1
 

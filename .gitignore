@@ -2,3 +2,5 @@ pkg
 coverage
 Gemfile.lock
 tmp
+.bundle
+vendor
