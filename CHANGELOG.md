@@ -1,8 +1,12 @@
 # Changelog
 
-## 0.3.3 Unreleased
+## 0.3.4
 
 * [TT-4812] Remove bootstrap class from calender tag
+
+## 0.3.3
+
+* Skipped due to mis-tagged version
 
 ## 0.3.2
 
