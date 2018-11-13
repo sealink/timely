@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.3 Unreleased
+
+* [TT-4812] Remove bootstrap class from calender tag
+
 ## 0.3.2
 
 * [TT-4716] Better exception message when a range is invalid
