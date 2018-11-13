@@ -18,7 +18,7 @@ module Timely
 
         options[:class] = options[:class].split(' ') if options[:class].is_a?(String)
         options[:class] ||= []
-        options[:class] += %w(datepicker input-small)
+        options[:class] << 'datepicker'
         options[:class] = options[:class].join(' ') # Rails 2 requires string values
 
         options[:size] ||= 10

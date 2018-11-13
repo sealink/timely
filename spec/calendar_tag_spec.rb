@@ -17,7 +17,7 @@ describe Timely::ActionViewHelpers do
     expect(string).to receive(:html_safe)
     expect(subject).to receive(:tag).with(:input,
       :id    => 'test',
-      :class => 'datepicker input-small',
+      :class => 'datepicker',
       :size  => 10,
       :maxlength => 10,
       :name  => 'test',
