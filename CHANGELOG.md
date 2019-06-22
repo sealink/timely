@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0 Unreleased
+
+* [TT-5648] Fix date_range to string when a single month covers a year period
+
 ## 0.3.4
 
 * [TT-4812] Remove bootstrap class from calender tag
