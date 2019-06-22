@@ -5,12 +5,10 @@ rvm:
   - 2.6
 matrix:
   fast_finish: true
-  exclude:
-    - rvm: 2.4
-      gemfile: gemfiles/rails3.gemfile
 script: bundle exec rake spec
 gemfile:
   - gemfiles/rails5.gemfile
+  - gemfiles/rails6.gemfile
 notifications:
   email:
     - support@travellink.com.au
