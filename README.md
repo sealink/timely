@@ -1,5 +1,4 @@
-Timely
-======
+# Timely
 
 [![Build Status](https://travis-ci.org/sealink/timely.png?branch=master)](https://travis-ci.org/sealink/timely)
 [![Coverage Status](https://coveralls.io/repos/sealink/timely/badge.png)](https://coveralls.io/r/sealink/timely)
@@ -11,18 +10,20 @@ Timely
 Various helpers to work with times, dates and weekdays, etc.
 
 It includes the following (see end for full descriptions)
-* Core extensions to Date and Time
-* DateChooser, a class to help select a subset of dates within any range, e.g. All 2nd Sundays, Every 15th of the month, All Tuesdays and Wednesdays
-* WeekDays, a class to manage the selection of weekdays, outputs a integer representing which days as a number between 0 and 127 (e.g. a 7 bit integer)
-* DateRange: A subclass of Range for dates with various helpers and aliases
-* TrackableDateSet: Recording set of dates processed/processing
-* TemporalPatterns: Various other classes related to time, e.g. Frequency
+
+- Core extensions to Date and Time
+- DateChooser, a class to help select a subset of dates within any range, e.g. All 2nd Sundays, Every 15th of the month, All Tuesdays and Wednesdays
+- WeekDays, a class to manage the selection of weekdays, outputs a integer representing which days as a number between 0 and 127 (e.g. a 7 bit integer)
+- DateRange: A subclass of Range for dates with various helpers and aliases
+- TrackableDateSet: Recording set of dates processed/processing
+- TemporalPatterns: Various other classes related to time, e.g. Frequency
 
 It includes the following rails extensions (only loaded if inside rails project):
-* Date Group, a date range which can also be limited to WeekDays, e.g. all weekends between March and April
-* Season, a collection of Date Groups
-* weekdays_field, a way to declare an integer field to store weekdays (weekdays is stored as 7 bit integer)
-* acts_as_seasonal, a way to declare a season_id foreign key as well as some helper methods
+
+- Date Group, a date range which can also be limited to WeekDays, e.g. all weekends between March and April
+- Season, a collection of Date Groups
+- weekdays_field, a way to declare an integer field to store weekdays (weekdays is stored as 7 bit integer)
+- acts_as_seasonal, a way to declare a season_id foreign key as well as some helper methods
 
 # INSTALLATION
 
