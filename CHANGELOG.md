@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.4.0 Unreleased
+## 0.4.0
 
 * [TT-5648] Fix date_range to string when a single month covers a year period
 
