@@ -58,7 +58,7 @@ module Timely
       if first && last
         if first == last
           first.strftime(fmt)
-        elsif first == first.at_beginning_of_month && last == last.at_end_of_month
+        elsif first.year == last.year && first == first.at_beginning_of_month && last == last.at_end_of_month
           if first.month == last.month
             first.strftime(month_fmt)
           else
