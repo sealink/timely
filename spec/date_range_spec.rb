@@ -27,7 +27,7 @@ describe Timely::DateRange do
     expect(Timely::DateRange.new('2000-01-04'.to_date, '2000-01-06'.to_date).to_s).to eq '2000-01-04 to 2000-01-06 (inclusive)'
     expect(Timely::DateRange.new('2000-01-01'.to_date, '2000-05-31'.to_date).to_s).to eq 'Jan 2000 to May 2000'
     expect(Timely::DateRange.new('2000-01-01'.to_date, '2000-01-31'.to_date).to_s).to eq 'Jan 2000'
-    expect(Timely::DateRange.new('2000-01-01'.to_date, '2001-01-31'.to_date).to_s).to eq '2000-01-01 to 2001-01-31 (inclusive)'
+    expect(Timely::DateRange.new('2000-01-01'.to_date, '2001-01-31'.to_date).to_s).to eq 'Jan 2000 to Jan 2001'
     Date::DATE_FORMATS[:short] = '%Y-%m-%d'
     expect(Timely::DateRange.to_s('2000-01-01'.to_date, nil)).to eq 'on or after 2000-01-01'
     expect(Timely::DateRange.to_s(nil, '2000-01-31'.to_date)).to eq 'on or before 2000-01-31'
