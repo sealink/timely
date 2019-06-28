@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.4.1
 
 * [TT-5674] Make multi year date format friendlier
 
