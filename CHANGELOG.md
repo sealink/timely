@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* [TT-5674] Make multi year date format friendlier
+
 ## 0.4.0
 
 * [TT-5648] Fix date_range to string when a single month covers a year period
