@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* [TT-5794] Fix belongs_to associations are not explicitly marked optional
+
 ## 0.4.1
 
 * [TT-5674] Make multi year date format friendlier

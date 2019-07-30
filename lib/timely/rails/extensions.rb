@@ -14,7 +14,7 @@ module Timely
     end
 
     def acts_as_seasonal
-      belongs_to :season, :class_name => 'Timely::Season'
+      belongs_to :season, :class_name => 'Timely::Season', optional: true
       accepts_nested_attributes_for :season
       validates_associated :season
 
