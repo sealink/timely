@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.4.2
 
 * [TT-5794] Fix belongs_to associations are not explicitly marked optional
 
