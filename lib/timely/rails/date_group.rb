@@ -1,6 +1,6 @@
 module Timely
   class DateGroup < ActiveRecord::Base
-    belongs_to :season, :class_name => 'Timely::Season'
+    belongs_to :season, :class_name => 'Timely::Season', optional: true
 
     weekdays_field :weekdays
 
