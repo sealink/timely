@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* [TT-6193] Date group scopes for more efficient searches/restrictions
+
 ## 0.4.2
 
 * [TT-5794] Fix belongs_to associations are not explicitly marked optional

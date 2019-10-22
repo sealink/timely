@@ -2,6 +2,16 @@ module Timely
   class WeekDays
     WEEKDAY_KEYS = %i[sun mon tue wed thu fri sat]
 
+    def self.from_range(date_range)
+      dates = Array(date_range)
+      return ALL_WEEKDAYS if dates.count >= WEEKDAY_KEYS.count
+
+      new(dates.each_with_object({}) { |date, result|
+        # e.g. {3: true, 5: true}
+        result[date.to_date.wday] = true
+      })
+    end
+
     # Create a new Weekdays object
     # weekdays can be in three formats
     # integer representing binary string
