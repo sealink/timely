@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.5.0
 
 * [TT-6193] Date group scopes for more efficient searches/restrictions
 
