@@ -7,6 +7,32 @@ module Timely
     validates_presence_of :start_date, :end_date
     validate :validate_date_range!
 
+    scope :covering_date, lambda { |date|
+      # Suitable for use with joins/merge!
+      where(arel_table[:start_date].lteq(date)).where(arel_table[:end_date].gteq(date))
+    }
+
+    scope :within_range, lambda { |date_range|
+      # IMPORTANT: Required for correctness in case of string param.
+      dates = Array(date_range)
+      scope = covering_date(dates.first)
+      if dates.first != dates.last
+        scope = scope.or(covering_date(dates.last))
+      end
+      scope
+    }
+
+    scope :for_any_weekdays, lambda { |weekdays_int|
+      weekdays_int = weekdays_int.to_i
+      where((arel_table[:weekdays_bit_array] & weekdays_int).not_eq(0))
+      .or(where(weekdays_bit_array: nil))
+    }
+
+    scope :applying_for_duration, lambda { |date_range|
+      weekdays_int = Timely::WeekDays.from_range(date_range).weekdays_int
+      within_range(date_range).for_any_weekdays(weekdays_int)
+    }
+
     def includes_date?(date)
       date >= start_date && date <= end_date && weekdays.applies_for_date?(date)
     end
