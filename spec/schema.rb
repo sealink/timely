@@ -1,4 +1,6 @@
-ActiveRecord::Schema.define(:version => 1) do
+# frozen_string_literal: true
+
+ActiveRecord::Schema.define(version: 1) do
   create_table :seasonals do |t|
     t.date :boundary_start, :boundary_end
     t.integer :season_id
@@ -13,4 +15,3 @@ ActiveRecord::Schema.define(:version => 1) do
     t.date :start_date, :end_date
   end
 end
-

@@ -1,15 +1,19 @@
+# frozen_string_literal: true
+
 module Timely
   module Date
     def at_time(hour = nil, minute = nil, second = nil)
       if hour.is_a?(::Time)
         time = hour
-        hour, minute, second = time.hour, time.min, time.sec
+        hour = time.hour
+        minute = time.min
+        second = time.sec
       end
 
       ::Time.local(year, month, day, hour, minute, second)
     end
 
-    alias_method :at, :at_time
+    alias at at_time
 
     # returns true if date between from and to
     # however if from and/or to are nil, it ignores that query

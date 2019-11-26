@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Timely
   module String
     # fmt e.g. '%d/%m/%Y'
@@ -12,12 +14,12 @@ module Timely
       else
         ::Date.new(*::Date._parse(self, false).values_at(:year, :mon, :mday))
       end
-    rescue NoMethodError, ArgumentError => e
+    rescue NoMethodError, ArgumentError
       raise DateFormatException, "Date #{self} is invalid or not formatted correctly."
     end
   end
 
-  class DateFormatException < Exception; end
+  class DateFormatException < RuntimeError; end
 end
 
 class String

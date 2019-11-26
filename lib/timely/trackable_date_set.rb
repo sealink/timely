@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'set'
 
 # Track a set of dates (usually a range)
@@ -40,22 +42,20 @@ module Timely
       @dates_to_do = @dates.dup
     end
 
-    def self.new_for_date(date, opts={})
+    def self.new_for_date(date, opts = {})
       duration = opts[:duration] || 1
       TrackableDateSet.new(date..(date + duration - 1))
     end
 
-    # Todo: remove
+    # TODO: remove
     # Initialize from a date + duration
-    def self.from_params(date_string, duration_string=nil)
+    def self.from_params(date_string, duration_string = nil)
       duration = duration_string.to_i
-      duration = 1 if duration == 0
-      new_for_date(date_string.to_date, :duration => duration)
+      duration = 1 if duration.zero?
+      new_for_date(date_string.to_date, duration: duration)
     end
 
-    def dates
-      @dates
-    end
+    attr_reader :dates
 
     # Find the set of dates which are YET to do
     def find_to_do
@@ -66,7 +66,7 @@ module Timely
     def dates_done
       @dates - @dates_to_do
     end
-    alias_method :find_done, :dates_done
+    alias find_done dates_done
 
     # Yield each date to do
     def each_date_to_do
@@ -92,9 +92,9 @@ module Timely
       @dates_to_do.clear
     end
 
-    def has_done?(date_or_date_range)
+    def done_dates?(date_or_date_range)
       if date_or_date_range.is_a?(Enumerable)
-        @dates_to_do.none?{|date_to_do| date_or_date_range.include?(date_to_do)}
+        @dates_to_do.none? { |date_to_do| date_or_date_range.include?(date_to_do) }
       else
         !@dates_to_do.include? date_or_date_range
       end
@@ -110,8 +110,9 @@ module Timely
     #
     #   action_name => Name to track
     #   {:job_done_when} => Block to call, passed result of yield
-    def do_once(action_name, opts={})
+    def do_once(action_name, opts = {})
       return if action_applied?(action_name)
+
       result = yield
 
       job_done = opts[:job_done_when].blank? || opts[:job_done_when].call(result)
@@ -131,14 +132,15 @@ module Timely
     def duration
       @dates.size
     end
-    alias_method :number_of_nights, :duration
+    alias number_of_nights duration
 
-  # Can't say whole_period anymore... it's not necessarily sequential dates
-  #  def whole_period
-  #    self.dates
-  #  end
+    # Can't say whole_period anymore... it's not necessarily sequential dates
+    #  def whole_period
+    #    self.dates
+    #  end
 
     private
+
     def actions_applied
       @actions_applied ||= Set.new
     end

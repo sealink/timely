@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module Timely
   class DateGroup < ActiveRecord::Base
-    belongs_to :season, :class_name => 'Timely::Season', optional: true
+    belongs_to :season, class_name: 'Timely::Season', optional: true
 
     weekdays_field :weekdays
 
@@ -16,16 +18,14 @@ module Timely
       # IMPORTANT: Required for correctness in case of string param.
       dates = Array(date_range)
       scope = covering_date(dates.first)
-      if dates.first != dates.last
-        scope = scope.or(covering_date(dates.last))
-      end
+      scope = scope.or(covering_date(dates.last)) if dates.first != dates.last
       scope
     }
 
     scope :for_any_weekdays, lambda { |weekdays_int|
       weekdays_int = weekdays_int.to_i
       where((arel_table[:weekdays_bit_array] & weekdays_int).not_eq(0))
-      .or(where(weekdays_bit_array: nil))
+        .or(where(weekdays_bit_array: nil))
     }
 
     scope :applying_for_duration, lambda { |date_range|
@@ -43,7 +43,7 @@ module Timely
       elsif weekdays.all_days?
         true
       else
-        date_range.intersecting_dates(start_date..end_date).any?{|d| weekdays.applies_for_date?(d)}
+        date_range.intersecting_dates(start_date..end_date).any? { |d| weekdays.applies_for_date?(d) }
       end
     end
 
@@ -70,30 +70,31 @@ module Timely
       date_groups = []
       Array.wrap(patterns).each do |pattern|
         if pattern.frequency.unit == :weeks
-          weekdays = pattern.intervals.map { |i| i.first_datetime.wday }.inject({}) do |hash, wday|
+          weekdays = pattern.intervals.map { |i| i.first_datetime.wday }.each_with_object({}) do |wday, hash|
             hash[wday] = 1
-            hash
           end
           date_groups << DateGroup.new(
-            :start_date => pattern.first_datetime.to_date,
-            :end_date => pattern.last_datetime.to_date,
-            :weekdays => weekdays)
+            start_date: pattern.first_datetime.to_date,
+            end_date: pattern.last_datetime.to_date,
+            weekdays: weekdays
+          )
         elsif pattern.frequency.unit == :days && pattern.frequency.duration == 1.day
           date_groups << DateGroup.new(
-            :start_date => pattern.first_datetime.to_date,
-            :end_date => pattern.last_datetime.to_date,
-            :weekdays => 127)
+            start_date: pattern.first_datetime.to_date,
+            end_date: pattern.last_datetime.to_date,
+            weekdays: 127
+          )
         else
           pattern.datetimes.each do |datetimes|
             datetimes.group_by(&:week).values.each do |dates|
-              weekdays = dates.map(&:wday).inject({}) do |hash, wday|
+              weekdays = dates.map(&:wday).each_with_object({}) do |wday, hash|
                 hash[wday] = 1
-                hash
               end
               date_groups << DateGroup.new(
-                :start_date => dates.min.to_date.beginning_of_week,
-                :end_date => dates.max.to_date.end_of_week,
-                :weekdays => weekdays)
+                start_date: dates.min.to_date.beginning_of_week,
+                end_date: dates.max.to_date.end_of_week,
+                weekdays: weekdays
+              )
             end
           end
         end
@@ -104,9 +105,9 @@ module Timely
     private
 
     def validate_date_range!
-      if start_date && end_date && (start_date > end_date)
-        raise ArgumentError, "Incorrect date range #{start_date} is before #{end_date}"
-      end
+      return unless start_date && end_date && start_date > end_date
+
+      raise ArgumentError, "Incorrect date range #{start_date} is before #{end_date}"
     end
   end
 end

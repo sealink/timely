@@ -1,22 +1,23 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Timely::DateRange do
-
-  it "should allow initialization with two dates" do
+  it 'should allow initialization with two dates' do
     expect { @date_range = Timely::DateRange.new(Date.today, Date.today + 3) }.to_not raise_error
     expect(@date_range.start_date).to eq Date.today
     expect(@date_range.end_date).to eq Date.today + 3
     expect(@date_range.number_of_nights).to eq 4
   end
 
-  it "should allow initialization with one date" do
+  it 'should allow initialization with one date' do
     expect { @date_range = Timely::DateRange.new(Date.today) }.to_not raise_error
     expect(@date_range.start_date).to eq Date.today
     expect(@date_range.end_date).to eq Date.today
     expect(@date_range.number_of_nights).to eq 1
   end
 
-  it "should allow initialization with a range" do
+  it 'should allow initialization with a range' do
     expect { @date_range = Timely::DateRange.new(Date.today..Date.today + 3) }.to_not raise_error
     expect(@date_range.start_date).to eq Date.today
     expect(@date_range.end_date).to eq Date.today + 3
@@ -59,21 +60,30 @@ describe Timely::DateRange do
     expect(today.last).to eq '2000-01-05'.to_date
   end
 
-  it "should correctly find the interesection between two date ranges" do
-    @date_range = Timely::DateRange.new("2000-01-03".to_date, "2000-01-06".to_date)
-    expect(@date_range.intersecting_dates(Timely::DateRange.new("2000-01-04".to_date, "2000-01-07".to_date))).to eq ("2000-01-04".to_date.."2000-01-06".to_date)
-    expect(@date_range.intersecting_dates(Timely::DateRange.new("2000-01-01".to_date, "2000-01-02".to_date))).to eq []
-    expect(@date_range.intersecting_dates(Timely::DateRange.new("2000-01-01".to_date, "2000-01-03".to_date))).to eq ("2000-01-03".to_date.."2000-01-03".to_date)
-    expect(@date_range.intersecting_dates(Timely::DateRange.new("2000-01-06".to_date, "2000-01-07".to_date))).to eq ("2000-01-06".to_date.."2000-01-06".to_date)
-    expect(@date_range.intersecting_dates(Timely::DateRange.new("2000-01-06".to_date, "2000-01-07".to_date))).to eq ("2000-01-06".to_date.."2000-01-06".to_date)
-    expect(@date_range.intersecting_dates(Timely::DateRange.new("2000-01-04".to_date, "2000-01-05".to_date))).to eq ("2000-01-04".to_date.."2000-01-05".to_date)
-    expect(@date_range.intersecting_dates(Timely::DateRange.new("2000-01-05".to_date, "2000-01-05".to_date))).to eq ("2000-01-05".to_date.."2000-01-05".to_date)
+  it 'should correctly find the interesection between two date ranges' do
+    @date_range = Timely::DateRange.new('2000-01-03'.to_date, '2000-01-06'.to_date)
+    {
+      ['2000-01-04'.to_date, '2000-01-07'.to_date] => '2000-01-04'.to_date..'2000-01-06'.to_date,
+      ['2000-01-01'.to_date, '2000-01-02'.to_date] => [],
+      ['2000-01-01'.to_date, '2000-01-03'.to_date] => '2000-01-03'.to_date..'2000-01-03'.to_date,
+      ['2000-01-06'.to_date, '2000-01-07'.to_date] => '2000-01-06'.to_date..'2000-01-06'.to_date,
+      ['2000-01-06'.to_date, '2000-01-07'.to_date] => '2000-01-06'.to_date..'2000-01-06'.to_date,
+      ['2000-01-04'.to_date, '2000-01-05'.to_date] => '2000-01-04'.to_date..'2000-01-05'.to_date,
+      ['2000-01-05'.to_date, '2000-01-05'.to_date] => '2000-01-05'.to_date..'2000-01-05'.to_date
+    }.each do |args, result|
+      tdr = Timely::DateRange.new(*args)
+      expect(@date_range.intersecting_dates(tdr)).to eq(result)
+    end
 
-    @date_range = Timely::DateRange.new("2000-01-03".to_date, "2000-01-03".to_date)
-    expect(@date_range.intersecting_dates(Timely::DateRange.new("2000-01-04".to_date, "2000-01-07".to_date))).to eq []
-    expect(@date_range.intersecting_dates(Timely::DateRange.new("2000-01-01".to_date, "2000-01-03".to_date))).to eq ("2000-01-03".to_date.."2000-01-03".to_date)
-    expect(@date_range.intersecting_dates(Timely::DateRange.new("2000-01-03".to_date, "2000-01-05".to_date))).to eq ("2000-01-03".to_date.."2000-01-03".to_date)
-    expect(@date_range.intersecting_dates(Timely::DateRange.new("2000-01-02".to_date, "2000-01-04".to_date))).to eq ("2000-01-03".to_date.."2000-01-03".to_date)
+    @date_range = Timely::DateRange.new('2000-01-03'.to_date, '2000-01-03'.to_date)
+    {
+      ['2000-01-04'.to_date, '2000-01-07'.to_date] => [],
+      ['2000-01-01'.to_date, '2000-01-03'.to_date] => '2000-01-03'.to_date..'2000-01-03'.to_date,
+      ['2000-01-03'.to_date, '2000-01-05'.to_date] => '2000-01-03'.to_date..'2000-01-03'.to_date,
+      ['2000-01-02'.to_date, '2000-01-04'.to_date] => '2000-01-03'.to_date..'2000-01-03'.to_date
+    }.each do |args, result|
+      tdr = Timely::DateRange.new(*args)
+      expect(@date_range.intersecting_dates(tdr)).to eq(result)
+    end
   end
-
 end

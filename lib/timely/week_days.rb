@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 module Timely
   class WeekDays
-    WEEKDAY_KEYS = %i[sun mon tue wed thu fri sat]
+    WEEKDAY_KEYS = %i[sun mon tue wed thu fri sat].freeze
 
     def self.from_range(date_range)
       dates = Array(date_range)
       return ALL_WEEKDAYS if dates.count >= WEEKDAY_KEYS.count
 
-      new(dates.each_with_object({}) { |date, result|
+      new(dates.each_with_object({}) do |date, result|
         # e.g. {3: true, 5: true}
         result[date.to_date.wday] = true
-      })
+      end)
     end
 
     # Create a new Weekdays object
@@ -36,7 +38,7 @@ module Timely
       when Integer
         # 4 -> 0000100 (binary) -> "0010000" (reversed string) -> {:tue => true}
         weekdays.to_s(2).reverse.each_char.with_index do |char, index|
-          set_day(index, char == "1")
+          set_day(index, char == '1')
         end
       when Hash
         weekdays.each_pair do |day, value|
@@ -58,7 +60,7 @@ module Timely
         }
       else
         raise ArgumentError,
-              "You must initialize with an Integer, Hash or Array"
+              'You must initialize with an Integer, Hash or Array'
       end
     end
 
@@ -73,10 +75,9 @@ module Timely
 
     def set_day(day, set)
       key = day_to_index(day)
-      unless WEEKDAY_KEYS.include?(key)
-        raise ArgumentError, "Invalid week day index #{key}"
-      end
-      @weekdays[key] = [true, "true", 1, "1"].include?(set)
+      raise ArgumentError, "Invalid week day index #{key}" unless WEEKDAY_KEYS.include?(key)
+
+      @weekdays[key] = [true, 'true', 1, '1'].include?(set)
     end
 
     def applies_for_date?(date)
@@ -114,7 +115,7 @@ module Timely
       days = weekdays.map { |day| day.to_s.capitalize }
       last_day = days.pop
 
-      days.empty? ? last_day : days.join(", ") + ", and " + last_day
+      days.empty? ? last_day : days.join(', ') + ', and ' + last_day
     end
 
     # 7 bits encoded in decimal number
@@ -123,7 +124,7 @@ module Timely
     def weekdays_int
       int = 0
       WEEKDAY_KEYS.each.with_index do |day, index|
-        int += 2 ** index if @weekdays[day]
+        int += 2**index if @weekdays[day]
       end
       int
     end

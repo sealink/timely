@@ -1,18 +1,18 @@
+# frozen_string_literal: true
+
 module Timely
   class DateChooser
     # Where is this used... so far only in one place, _date_range.html.haml
     # May be good to refactor this as well, after the class behaviour is refactored.
     INTERVALS = [
-      {:code => 'week', :name => 'week(s)', :description =>
-          'Weekdays selected will be chosen every {{n}} weeks for the date range'},
-      {:code => 'week_of_month', :name => 'week of month', :description =>
-          'Weekdays selected will be chosen in their {{ord}} occurance every month,
+      { code: 'week', name: 'week(s)', description: 'Weekdays selected will be chosen every {{n}} weeks for the date range' },
+      { code: 'week_of_month', name: 'week of month', description:           'Weekdays selected will be chosen in their {{ord}} occurance every month,
           e.g. if wednesday and thursday are selected, the first wednesday and
           first thursday are selected. Note: this may mean the booking is copied
-          to Thursday 1st and Wednesday 7th'}
-    ]
+          to Thursday 1st and Wednesday 7th' }
+    ].freeze
 
-    attr_accessor  :multiple_dates, :from, :to, :select, :dates, :interval, :weekdays
+    attr_accessor :multiple_dates, :from, :to, :select, :dates, :interval, :weekdays
 
     def initialize(options)
       @multiple_dates = options[:multiple_dates] || false
@@ -28,8 +28,8 @@ module Timely
 
     def process_date(date)
       case date
-      when Date; date
-      when NilClass; nil
+      when Date then date
+      when NilClass then nil
       when String
         date !~ /[^[:space:]]/ ? nil : date.to_date
       end
@@ -53,7 +53,7 @@ module Timely
     #          so every friday and saturday each fornight
     def choose_dates
       # Not multiple dates - just return the From date.
-      return [@from] if !@multiple_dates
+      return [@from] unless @multiple_dates
 
       # Multiple dates - return the array, adjusted as per input
       all_days = (@from..@to).to_a
@@ -66,21 +66,21 @@ module Timely
         days = @specific_dates.gsub(/\s/, '').split(',')
         days.map(&:to_date)
       when 'weekdays'
-        raise DateChooserException, "No days of the week selected" if @weekdays.weekdays.empty?
-        raise DateChooserException, "No weekly interval selected" if @interval && @interval.empty?
+        raise DateChooserException, 'No days of the week selected' if @weekdays.weekdays.empty?
+        raise DateChooserException, 'No weekly interval selected' if @interval&.empty?
 
         all_days.select do |date|
-          if @weekdays.has_day?(date.wday)
-            case @interval[:unit]
-            when 'week'
-              # 0 = first week, 1 = second week, 2 = third week, etc.
-              nth_week = (date - @from).to_i / 7
-              # true every 2nd week (0, 2, 4, 6, etc.)
-              (nth_week % @interval[:level].to_i).zero?
-            when 'week_of_month'
-              week = @interval[:level].to_i
-              (date.mday > (week-1)*7 && date.mday <= week*7)
-            end
+          next unless @weekdays.has_day?(date.wday)
+
+          case @interval[:unit]
+          when 'week'
+            # 0 = first week, 1 = second week, 2 = third week, etc.
+            nth_week = (date - @from).to_i / 7
+            # true every 2nd week (0, 2, 4, 6, etc.)
+            (nth_week % @interval[:level].to_i).zero?
+          when 'week_of_month'
+            week = @interval[:level].to_i
+            (date.mday > (week - 1) * 7 && date.mday <= week * 7)
           end
         end
       else
@@ -89,15 +89,14 @@ module Timely
     end
 
     private
+
     def validate
-      if !@from
-        raise DateChooserException, "A Start Date is required"
-      elsif @multiple_dates
-        @to ||= @from
-        raise DateChooserException, "Start Date is after End Date" if @from > @to
-      end
+      raise DateChooserException, 'A Start Date is required' unless @from
+      raise DateChooserException, 'Start Date is after End Date' if @multiple_dates && @to && @from > @to
+
+      @to ||= @from if @multiple_dates
     end
   end
 
-  class DateChooserException < Exception; end
+  class DateChooserException < RuntimeError; end
 end

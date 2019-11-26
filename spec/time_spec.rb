@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 TestTime = Class.new(Time) do
@@ -7,7 +9,7 @@ end
 describe Time do
   it 'should be able to set date on a time' do
     xmas = Date.new(2012, 12, 25)
-    lunch_time = TestTime.parse("12:00")
+    lunch_time = TestTime.parse('12:00')
     xmas_lunch = lunch_time.on_date(xmas)
     expect(xmas_lunch.year).to eq 2012
     expect(xmas_lunch.month).to eq 12
@@ -17,9 +19,9 @@ describe Time do
     expect(xmas_lunch.sec).to eq 0
   end
 
-  it "should allow setting the date part given a date" do
-    time = TestTime.parse("2010-01-01 09:30:00")
-    expect(time.on_date(Date.parse("2012-12-31"))).to eq Time.parse("2012-12-31 09:30:00")
+  it 'should allow setting the date part given a date' do
+    time = TestTime.parse('2010-01-01 09:30:00')
+    expect(time.on_date(Date.parse('2012-12-31'))).to eq Time.parse('2012-12-31 09:30:00')
   end
 end
 
