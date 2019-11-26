@@ -2,12 +2,13 @@
 
 module Timely
   class DateGroup < ActiveRecord::Base
-    belongs_to :season, class_name: 'Timely::Season', optional: true
+    belongs_to :season, class_name: 'Timely::Season', optional: true, inverse_of: :date_groups
 
     weekdays_field :weekdays
 
     validates_presence_of :start_date, :end_date
     validate :validate_date_range!
+    validate :validate_weekdays_not_null
 
     scope :covering_date, lambda { |date|
       # Suitable for use with joins/merge!
@@ -23,9 +24,7 @@ module Timely
     }
 
     scope :for_any_weekdays, lambda { |weekdays_int|
-      weekdays_int = weekdays_int.to_i
-      where((arel_table[:weekdays_bit_array] & weekdays_int).not_eq(0))
-        .or(where(weekdays_bit_array: nil))
+      where((arel_table[:weekdays_bit_array] & weekdays_int.to_i).not_eq(0))
     }
 
     scope :applying_for_duration, lambda { |date_range|
@@ -108,6 +107,10 @@ module Timely
       return unless start_date && end_date && start_date > end_date
 
       raise ArgumentError, "Incorrect date range #{start_date} is before #{end_date}"
+    end
+
+    def validate_weekdays_not_null
+      errors.add(:weekdays, 'weekdays cannot be NULL') if weekdays_bit_array.nil?
     end
   end
 end
