@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* [TT-6401] Remove Rails 3 support, unused methods
+
 ## 0.5.0
 
 * [TT-6193] Date group scopes for more efficient searches/restrictions

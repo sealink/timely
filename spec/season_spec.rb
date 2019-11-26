@@ -31,28 +31,6 @@ describe Timely::Season, "in general" do
 end
 
 
-describe Timely::Season, 'when asked to build season for given dates' do
-  subject(:season) { Timely::Season.build_season_for(dates) }
-
-  context 'when three dates' do
-    let(:dates) { [Date.current + 1, Date.current + 4, Date.current + 5] }
-    its(:class) { should eq Timely::Season }
-    its('date_groups.size') { should eq 3 }
-
-    it "should generate proper date groups" do
-      expect(season.date_groups.first.start_date).to eq (Date.current + 1)
-      expect(season.date_groups.last.start_date).to eq (Date.current + 5)
-      expect(season.date_groups.last.end_date).to eq (Date.current + 5)
-    end
-  end
-
-  context 'when dates are empty' do
-    let(:dates) { [] }
-    its(:date_groups) { should be_empty }
-  end
-end
-
-
 # == Schema Information
 #
 # Table name: seasons

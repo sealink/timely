@@ -1,5 +1,3 @@
-require 'date' # Ensure Date class is loaded for old rubies (1.8)
-
 module Timely
   class DateRange < ::Range
     def initialize(*args)

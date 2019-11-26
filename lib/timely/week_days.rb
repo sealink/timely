@@ -105,10 +105,7 @@ module Timely
     # Returns array of weekday selected
     # e.g. [:sun, :sat]
     def weekdays
-      selected = @weekdays.select { |_day, day_selected| day_selected }
-      # Ruby 1.8 returns an array for Hash#select and loses order
-      return selected.keys if selected.is_a?(Hash)
-      selected.map(&:first).sort_by { |v| WEEKDAY_KEYS.index(v) }
+      @weekdays.select { |_day, day_selected| day_selected }.keys
     end
 
     # Returns comma separated and capitalized in Sun-Sat order
@@ -143,6 +140,6 @@ module Timely
       end
     end
 
-    ALL_WEEKDAYS = WeekDays.new(%w[1 1 1 1 1 1 1])
+    ALL_WEEKDAYS = WeekDays.new(%w[1 1 1 1 1 1 1]).freeze
   end
 end

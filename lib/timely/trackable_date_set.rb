@@ -70,14 +70,12 @@ module Timely
 
     # Yield each date to do
     def each_date_to_do
-      # Sort method needed as Ruby 1.8 set's aren't ordered
-      @dates_to_do.sort.each{|date| yield date}
+      @dates_to_do.each { |date| yield date }
     end
 
     # Yield each date in the whole set
     def each_date
-      # Sort method needed as Ruby 1.8 set's aren't ordered
-      @dates.sort.each{|date| yield date}
+      @dates.each { |date| yield date }
     end
 
     # Set dates as done

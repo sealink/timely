@@ -22,11 +22,5 @@ describe Timely::Extensions do
     o.save!
     expect(o.boundary_start).to eq Date.current - 1
     expect(o.boundary_end  ).to eq Date.current + 2
-
-    expect(TimelyExtensionsTestSeasonal.season_on(Date.current + 3)).to be_empty
-    expect(TimelyExtensionsTestSeasonal.season_on(Date.current + 2)).to eq [o]
-    expect(TimelyExtensionsTestSeasonal.season_on(Date.current - 1)).to eq [o]
-    expect(TimelyExtensionsTestSeasonal.season_on(Date.current - 2)).to be_empty
-
   end
 end
