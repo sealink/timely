@@ -11,7 +11,7 @@ ActiveRecord::Schema.define(version: 1) do
   end
 
   create_table :date_groups do |t|
-    t.integer :season_id, :weekdays_bit_array
+    t.integer :season_id, :weekdays_bit_array, null: false, default: Timely::WeekDays::ALL_WEEKDAYS.weekdays_int
     t.date :start_date, :end_date
   end
 end

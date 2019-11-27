@@ -30,6 +30,25 @@ describe Timely::Season, 'in general' do
     expect(@simple_low_season.boundary_range).to eq('2009-01-01'.to_date..'2009-09-30'.to_date)
     expect(@simple_high_season.boundary_range).to eq('2009-04-01'.to_date..'2009-12-31'.to_date)
   end
+
+  context 'creating with nested attributes' do
+    subject { Timely::Season.new(date_groups_attributes: attrs) }
+
+    context 'with valid attributes' do
+      let(:attrs) { [ { 'start_date' => '2019-11-26' } ] }
+      it 'accepts nested date groups' do
+        expect(subject.date_groups).not_to be_empty
+        expect(subject.date_groups.first.start_date).to eq('2019-11-26'.to_date)
+      end
+    end
+
+    context 'invalid nested date groups' do
+      let(:attrs) { [ { 'start_date' => '' } ] }
+      it 'rejects nested date groups with nil start date' do
+        expect(subject.date_groups).to be_empty
+      end
+    end
+  end
 end
 
 # == Schema Information

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* [TT-6402] Require date group weekdays bit field to be not null/nil
+            IMPORTANT: Rails projects must add a migration to make this field not null!
 * [TT-6401] Remove Rails 3 support, unused methods
 
 ## 0.5.0
