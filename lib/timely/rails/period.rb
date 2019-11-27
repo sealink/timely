@@ -1,19 +1,21 @@
+# frozen_string_literal: true
+
 module Timely
   class Period
     attr_reader :number, :units
 
-    UNITS = [
-      :seconds,
-      :minutes,
-      :hours,
-      :days,
-      :weeks,
-      :months,
-      :years,
-      :calendar_days,
-      :calendar_months,
-      :calendar_years
-    ]
+    UNITS = %i[
+      seconds
+      minutes
+      hours
+      days
+      weeks
+      months
+      years
+      calendar_days
+      calendar_months
+      calendar_years
+    ].freeze
 
     def initialize(number, units)
       @number = number

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Date do
@@ -63,7 +65,7 @@ describe Date do
     end
 
     it 'should return the passed-in time on the date' do
-      @time = Time.now - 12345
+      @time = Time.now - 12_345
       expected = Time.local(@date.year, @date.month, @date.day, @time.hour, @time.min, @time.sec)
       expect(@date.at_time(@time)).to eq expected
     end

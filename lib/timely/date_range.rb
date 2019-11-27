@@ -1,4 +1,4 @@
-require 'date' # Ensure Date class is loaded for old rubies (1.8)
+# frozen_string_literal: true
 
 module Timely
   class DateRange < ::Range
@@ -15,14 +15,14 @@ module Timely
         super(args.first.to_date, args.last.to_date)
       end
     end
-    alias_method :start_date, :first
-    alias_method :end_date, :last
+    alias start_date first
+    alias end_date last
 
     def self.validate_range(first, last)
-      raise ArgumentError, "Date range missing start date" if first.nil?
-      raise ArgumentError, "Date range missing end date" if last.nil?
-      raise ArgumentError, "Start date is not a date" unless first.is_a? Date
-      raise ArgumentError, "End date is not a date" unless last.is_a? Date
+      raise ArgumentError, 'Date range missing start date' if first.nil?
+      raise ArgumentError, 'Date range missing end date' if last.nil?
+      raise ArgumentError, 'Start date is not a date' unless first.is_a? Date
+      raise ArgumentError, 'End date is not a date' unless last.is_a? Date
     end
 
     def self.from_params(start_date, duration = nil)
@@ -33,19 +33,18 @@ module Timely
     end
 
     def intersecting_dates(date_range)
-      start_of_intersection = [self.start_date, date_range.first].max
-      end_of_intersection = [self.end_date, date_range.last].min
-      intersection = if end_of_intersection >= start_of_intersection
-        (start_of_intersection..end_of_intersection)
-      else
-        []
-      end
+      r_start = [start_date, date_range.first].max
+      r_end = [end_date, date_range.last].min
+
+      return [] if r_end < r_start
+
+      r_start..r_end
     end
 
     def number_of_nights
       ((last - first) + 1).to_i
     end
-    alias_method :duration, :number_of_nights
+    alias duration number_of_nights
 
     def to_s(fmt = '%b %Y', date_fmt = '%Y-%m-%d')
       Timely::DateRange.to_s(first, last, fmt, date_fmt)
@@ -65,21 +64,20 @@ module Timely
             "#{first.strftime(month_fmt)} to #{last.strftime(month_fmt)}"
           end
         else
-          "#{first.strftime(fmt)} to #{last.strftime(fmt)}#{" (inclusive)" if is_date}"
+          "#{first.strftime(fmt)} to #{last.strftime(fmt)}#{' (inclusive)' if is_date}"
         end
       elsif first
         "on or after #{first.strftime(fmt)}"
       elsif last
         "on or before #{last.strftime(fmt)}"
       else
-        "no date range"
+        'no date range'
       end
     end
 
-
     private
 
-    def self.default_date_format
+    private_class_method def self.default_date_format
       # ::Date as we want Ruby's Date not Timely::Date
       date_format = ::Date::DATE_FORMATS[:short] if ::Date.const_defined?('DATE_FORMATS')
       date_format || '%Y-%m-%d'

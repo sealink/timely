@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'timely/rails/extensions'
 if defined?(ActiveRecord)
   ActiveRecord::Base.extend Timely::Extensions

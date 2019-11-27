@@ -1,10 +1,11 @@
-require "spec_helper"
+# frozen_string_literal: true
 
+require 'spec_helper'
 
 RSpec.describe Timely::DateGroup do
   before do
     @date_group = Timely::DateGroup.new(
-      :start_date => '2000-01-01', :end_date => '2000-01-03', :weekdays => %w(1 1 1 1 1 1 1)
+      start_date: '2000-01-01', end_date: '2000-01-03', weekdays: %w[1 1 1 1 1 1 1]
     )
   end
 
@@ -12,12 +13,12 @@ RSpec.describe Timely::DateGroup do
     expect(@date_group.applicable_for_duration?(Timely::DateRange.new('2000-01-01'.to_date, '2000-01-01'.to_date))).to be true
     expect(@date_group.applicable_for_duration?(Timely::DateRange.new('2000-01-01'.to_date, '2000-01-06'.to_date))).to be true
     expect(@date_group.applicable_for_duration?(Timely::DateRange.new('2001-01-01'.to_date, '2001-01-01'.to_date))).to be false
-    expect(@date_group.applicable_for_duration?(Timely::DateRange.new('1999-12-29'.to_date, '2000-01-05'.to_date))).to be true 
+    expect(@date_group.applicable_for_duration?(Timely::DateRange.new('1999-12-29'.to_date, '2000-01-05'.to_date))).to be true
   end
 
   it "should detect overlaps when certain weekdays aren't selected" do
     @date_group = Timely::DateGroup.create!(
-      :start_date => '2012-01-01', :end_date => '2012-01-07', :weekdays => %w(1 0 1 0 1 0 1)
+      start_date: '2012-01-01', end_date: '2012-01-07', weekdays: %w[1 0 1 0 1 0 1]
     )
     # Note: 2012-01-1 is a Sunday
     expect(@date_group.applicable_for_duration?(Timely::DateRange.new('2012-01-01'.to_date, '2012-01-01'.to_date))).to be true
@@ -27,22 +28,23 @@ RSpec.describe Timely::DateGroup do
   end
 end
 
-
 RSpec.describe 'Timely::DateGroup.for_any_weekdays' do
   let(:date_range) { ('2019-10-17'.to_date)..('2019-10-18'.to_date) }
   let(:weekdays_int) { Timely::WeekDays.from_range(date_range).weekdays_int }
 
-  let(:special_group) {
-    Timely::DateGroup.create(start_date: date_range.first, end_date: date_range.last).tap { |date_group|
+  let(:special_group) do
+    Timely::DateGroup.create(start_date: date_range.first, end_date: date_range.last).tap do |date_group|
       date_group.update_column(:weekdays_bit_array, nil)
-    }.reload
-  }
+    end.reload
+  end
 
-  let!(:date_groups) { [
-    Timely::DateGroup.create(start_date: date_range.first, end_date: date_range.last, weekdays: { thu: true }),
-    Timely::DateGroup.create(start_date: date_range.first, end_date: date_range.last, weekdays: { mon: true }),
-    special_group,
-  ] }
+  let!(:date_groups) do
+    [
+      Timely::DateGroup.create(start_date: date_range.first, end_date: date_range.last, weekdays: { thu: true }),
+      Timely::DateGroup.create(start_date: date_range.first, end_date: date_range.last, weekdays: { mon: true }),
+      special_group
+    ]
+  end
 
   RSpec.shared_examples 'finds expected date groups' do
     it 'finds expected date groups' do
@@ -61,15 +63,15 @@ RSpec.describe 'Timely::DateGroup.for_any_weekdays' do
 
   context '#within_range' do
     let(:scoped_result) { Timely::DateGroup.within_range(date_range).to_a }
-    let(:expected_groups) { [ date_groups[0], date_groups[1], date_groups[2] ] }
-    let(:absent_groups) { [ ] }
+    let(:expected_groups) { [date_groups[0], date_groups[1], date_groups[2]] }
+    let(:absent_groups) { [] }
     let(:includes_date_groups) { [] }
     it_behaves_like 'finds expected date groups'
   end
 
   let(:includes_date_groups) { expected_groups }
-  let(:expected_groups) { [ date_groups[0], date_groups[2] ] }
-  let(:absent_groups) { [ date_groups[1] ] }
+  let(:expected_groups) { [date_groups[0], date_groups[2]] }
+  let(:absent_groups) { [date_groups[1]] }
 
   context '#for_any_weekdays' do
     let(:scoped_result) { Timely::DateGroup.for_any_weekdays(weekdays_int).to_a }

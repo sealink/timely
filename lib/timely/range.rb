@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 module Timely
   module Range
     def to_date_range
-      DateRange.new(self.first, self.last)
+      DateRange.new(first, last)
     end
 
     def days_from(date = Date.today)
-      (date + self.first)..(date + self.last)
+      (date + first)..(date + last)
     end
   end
 end

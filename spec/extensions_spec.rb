@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'timely/rails/extensions'
 
@@ -13,20 +15,14 @@ describe Timely::Extensions do
 
   it 'should cache boundary start' do
     season = Timely::Season.new
-    season.date_groups.build(:start_date => Date.current, :end_date => Date.current + 2)
-    season.date_groups.build(:start_date => Date.current - 1, :end_date => Date.current + 1)
+    season.date_groups.build(start_date: Date.current, end_date: Date.current + 2)
+    season.date_groups.build(start_date: Date.current - 1, end_date: Date.current + 1)
     season.save!
 
     o = TimelyExtensionsTestSeasonal.new
     o.season = season
     o.save!
     expect(o.boundary_start).to eq Date.current - 1
-    expect(o.boundary_end  ).to eq Date.current + 2
-
-    expect(TimelyExtensionsTestSeasonal.season_on(Date.current + 3)).to be_empty
-    expect(TimelyExtensionsTestSeasonal.season_on(Date.current + 2)).to eq [o]
-    expect(TimelyExtensionsTestSeasonal.season_on(Date.current - 1)).to eq [o]
-    expect(TimelyExtensionsTestSeasonal.season_on(Date.current - 2)).to be_empty
-
+    expect(o.boundary_end).to eq Date.current + 2
   end
 end

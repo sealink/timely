@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 module Timely
   module TimeSince
     def seconds_since
-      ::DateTime.now.to_i - self.to_i
+      ::DateTime.now.to_i - to_i
     end
 
     def minutes_since
-      seconds_since/60
+      seconds_since / 60
     end
 
     def hours_since
-      minutes_since/60
+      minutes_since / 60
     end
   end
 end
