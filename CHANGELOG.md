@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.6.0
 
 * [TT-6402] Require date group weekdays bit field to be not null/nil
             IMPORTANT: Rails projects must add a migration to make this field not null!
