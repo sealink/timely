@@ -6,9 +6,9 @@ module Timely
 
     weekdays_field :weekdays
 
+    validates :weekdays_bit_array, presence: true
     validates_presence_of :start_date, :end_date
     validate :validate_date_range!
-    validate :validate_weekdays_not_null
 
     scope :covering_date, lambda { |date|
       # Suitable for use with joins/merge!
@@ -107,10 +107,6 @@ module Timely
       return unless start_date && end_date && start_date > end_date
 
       raise ArgumentError, "Incorrect date range #{start_date} is before #{end_date}"
-    end
-
-    def validate_weekdays_not_null
-      errors.add(:weekdays, 'weekdays cannot be NULL') if weekdays_bit_array.nil?
     end
   end
 end
