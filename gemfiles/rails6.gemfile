@@ -4,5 +4,5 @@ source 'https://rubygems.org'
 gemspec path: '../'
 
 group :development, :test do
-  gem 'activerecord', '~> 6.0.0.rc1'
+  gem 'activerecord', '~> 6.0'
 end
