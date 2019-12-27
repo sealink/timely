@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.7.0
 
 * [TT-6441] Due to TimeDifference being unmaintained bring it into the timely library
 
