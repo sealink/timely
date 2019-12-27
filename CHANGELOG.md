@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* [TT-6441] Due to TimeDifference being unmaintained bring it into the timely library
+
 ## 0.6.0
 
 * [TT-6402] Require date group weekdays bit field to be not null/nil
