@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* [TT-6441] Turns out we don't actually need time difference in QT
+
 ## 0.7.0
 
 * [TT-6441] Due to TimeDifference being unmaintained bring it into the timely library
