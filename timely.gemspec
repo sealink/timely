@@ -35,4 +35,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'sqlite3'
   spec.add_development_dependency 'timecop'
   spec.add_development_dependency 'travis'
+  spec.add_development_dependency 'pry'
 end

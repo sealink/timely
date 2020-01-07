@@ -18,9 +18,7 @@ module Timely
     scope :within_range, lambda { |date_range|
       # IMPORTANT: Required for correctness in case of string param.
       dates = Array(date_range)
-      scope = covering_date(dates.first)
-      scope = scope.or(covering_date(dates.last)) if dates.first != dates.last
-      scope
+      where(arel_table[:start_date].lteq(dates.last)).where(arel_table[:end_date].gteq(dates.first))
     }
 
     scope :for_any_weekdays, lambda { |weekdays_int|
