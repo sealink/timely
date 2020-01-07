@@ -11,6 +11,8 @@ require 'rubygems'
 require 'bundler/setup'
 require 'rspec/its'
 require 'active_record'
+require 'pry'
+require 'database_cleaner'
 
 require 'support/coverage_loader'
 
@@ -30,4 +32,15 @@ load('spec/schema.rb')
 RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation, except: %w(ar_internal_metadata))
+  end
+
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+  end
 end
