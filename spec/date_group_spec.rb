@@ -33,6 +33,44 @@ RSpec.describe Timely::DateGroup do
   end
 end
 
+RSpec.describe Timely::DateGroup, 'Timely::DateGroup.applying_for_duration' do
+  let!(:date_group_a) { Timely::DateGroup.create!(
+    start_date: '2020-01-01', end_date: '2020-04-04', weekdays: %w[1 1 1 1 1 1 1]
+  ) }
+
+  let!(:date_group_b) { Timely::DateGroup.create!(
+    start_date: '2020-04-02', end_date: '2020-04-09', weekdays: %w[1 1 1 1 1 1 1]
+  ) }
+
+  subject {
+    Timely::DateGroup.applying_for_duration(Timely::DateRange.new(start_date, end_date)).to_a
+  }
+
+  context 'intersecting dates (inside first)' do
+    let(:start_date) { '2020-03-29'.to_date }
+    let(:end_date) { '2020-04-13'.to_date }
+    it { is_expected.to eq([date_group_a, date_group_b]) }
+  end
+
+  context 'intersecting dates full range' do
+    let(:start_date) { '2020-01-01'.to_date }
+    let(:end_date) { '2020-04-09'.to_date }
+    it { is_expected.to eq([date_group_a, date_group_b]) }
+  end
+
+  context 'touching end of range' do
+    let(:start_date) { '2020-04-09'.to_date }
+    let(:end_date) { '2020-04-09'.to_date }
+    it { is_expected.to eq([date_group_b]) }
+  end
+
+  context 'touching start of range' do
+    let(:start_date) { '2020-04-01'.to_date }
+    let(:end_date) { '2020-04-01'.to_date }
+    it { is_expected.to eq([date_group_a]) }
+  end
+end
+
 RSpec.describe Timely::DateGroup, 'without weekdays' do
   subject { Timely::DateGroup.new(start_date: Date.current, end_date: Date.current) }
   it { is_expected.to be_valid }

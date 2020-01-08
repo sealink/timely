@@ -29,10 +29,12 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'rspec-its'
+  spec.add_development_dependency 'database_cleaner'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'rubocop-rails'
   spec.add_development_dependency 'simplecov-rcov'
   spec.add_development_dependency 'sqlite3'
   spec.add_development_dependency 'timecop'
   spec.add_development_dependency 'travis'
+  spec.add_development_dependency 'pry'
 end
