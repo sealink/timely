@@ -1,8 +1,9 @@
 # Changelog
 
-## Unreleased
+## 0.8.0
 
 * [TT-6441] Turns out we don't actually need time difference in QT
+* [TT-6661] Fix issue when detecting intersecting date groups
 
 ## 0.7.0
 
