@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
+  spec.required_ruby_version = '>= 2.6'
 
   spec.add_development_dependency 'actionpack'
   spec.add_development_dependency 'activerecord'
@@ -35,6 +36,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov-rcov'
   spec.add_development_dependency 'sqlite3'
   spec.add_development_dependency 'timecop'
-  spec.add_development_dependency 'travis'
   spec.add_development_dependency 'pry'
 end

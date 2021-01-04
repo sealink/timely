@@ -1,8 +1,7 @@
 # Timely
 
-[![Build Status](https://travis-ci.org/sealink/timely.png?branch=master)](https://travis-ci.org/sealink/timely)
+[![Build Status](https://github.com/sealink/timely/workflows/Build%20and%20Test/badge.svg?branch=master)](https://github.com/sealink/timely/actions)
 [![Coverage Status](https://coveralls.io/repos/sealink/timely/badge.png)](https://coveralls.io/r/sealink/timely)
-[![Dependency Status](https://gemnasium.com/sealink/timely.png?travis)](https://gemnasium.com/sealink/timely)
 [![Code Climate](https://codeclimate.com/github/sealink/timely.png)](https://codeclimate.com/github/sealink/timely)
 
 # DESCRIPTION
@@ -59,3 +58,15 @@ some_date.at_time(some_time)    # => Sat May 03 13:40:22 -0500 2008
 some_time.on(some_date)         # => Sat May 03 13:40:22 -0500 2008
 some_date.at(some_time)         # => Sat May 03 13:40:22 -0500 2008
 ```
+
+# Release
+
+To publish a new version of this gem the following steps must be taken.
+
+* Update the version in the following files
+  ```
+    CHANGELOG.md
+    lib/timely/version.rb
+  ````
+* Create a tag using the format v0.1.0
+* Follow build progress in GitHub actions
