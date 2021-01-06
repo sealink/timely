@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* [TT-8614] Update to build with github actions / ruby 3.0 / rails 6.1
+
 ## 0.8.0
 
 * [TT-6441] Turns out we don't actually need time difference in QT
