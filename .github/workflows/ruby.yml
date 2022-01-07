@@ -5,7 +5,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gemfile: [rails60, rails61]
+        gemfile: [rails60, rails61, rails70]
         ruby: ["2.7", "3.0", "3.1.0"]
 
     runs-on: ubuntu-latest

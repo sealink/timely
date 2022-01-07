@@ -20,8 +20,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.required_ruby_version = '>= 2.7'
 
-  spec.add_development_dependency 'activerecord', '>=6', '<7'
-  spec.add_development_dependency 'activesupport', '>=6', '<7'
+  spec.add_development_dependency 'activerecord', '>=6', '<8'
+  spec.add_development_dependency 'activesupport', '>=6', '<8'
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'coverage-kit'
   spec.add_development_dependency 'rake'
