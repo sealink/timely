@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* [PLAT-183] Publish coveralls with github actions add ruby 3.1 to test matrix
+
 ## 0.9.0
 
 * [TT-8614] Update to build with github actions / ruby 3.0 / rails 6.1

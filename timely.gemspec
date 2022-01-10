@@ -15,25 +15,21 @@ Gem::Specification.new do |spec|
 
   spec.license       = 'MIT'
 
-  spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.files = Dir["CHANGELOG.md", "README.md", "timely.gemspec", "lib/**/*"]
+  spec.executables   = []
   spec.require_paths = ['lib']
-  spec.required_ruby_version = '>= 2.6'
+  spec.required_ruby_version = '>= 2.7'
 
-  spec.add_development_dependency 'actionpack'
-  spec.add_development_dependency 'activerecord'
-  spec.add_development_dependency 'activesupport'
-  spec.add_development_dependency 'bundler', '~> 2.2.0'
+  spec.add_development_dependency 'activerecord', '>=6', '<8'
+  spec.add_development_dependency 'activesupport', '>=6', '<8'
+  spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'coverage-kit'
-  spec.add_development_dependency 'coveralls'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'rspec-its'
   spec.add_development_dependency 'database_cleaner'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'rubocop-rails'
-  spec.add_development_dependency 'simplecov-rcov'
   spec.add_development_dependency 'sqlite3'
   spec.add_development_dependency 'timecop'
   spec.add_development_dependency 'pry'
