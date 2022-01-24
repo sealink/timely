@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.10.0
 
 * [PLAT-183] Publish coveralls with github actions add ruby 3.1 to test matrix
 
