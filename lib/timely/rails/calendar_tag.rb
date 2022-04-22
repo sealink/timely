@@ -11,7 +11,9 @@ module Timely
       def calendar_tag(name, value = Timely.current_date, *args)
         options = args.extract_options!
 
-        value = value.to_s(:calendar) if value.respond_to?(:day)
+        if value.respond_to?(:day)
+          value = value.respond_to?(:to_fs) ? value.to_fs(:calendar) : value.to_s(:calendar)
+        end
 
         name = name.to_s if name.is_a?(Symbol)
 
