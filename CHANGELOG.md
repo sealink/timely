@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* [PLAT-346] Handle `to_s` deprecation on Rails 7
+
 ## 0.10.0
 
 * [PLAT-183] Publish coveralls with github actions add ruby 3.1 to test matrix
