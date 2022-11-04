@@ -27,6 +27,10 @@ module Timely
         options[:size] ||= 10
         options[:maxlength] ||= 10
 
+        if options[:object].respond_to?(:to_fs)
+          options[:object] = options[:object].to_fs(:default)
+        end
+
         tag(:input, options.merge(name: name, type: 'text', value: value)).html_safe
       end
     end
@@ -41,6 +45,7 @@ module Timely
     module FormBuilder
       def calendar(method, options = {})
         options[:object] = @object.send(method) unless options.key?(:object)
+
         @template.calendar(@object_name, method, options)
       end
     end

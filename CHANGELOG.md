@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* [PLAT-954] Handle additional `to_s` deprecation on Rails 7
+
 ## 0.11.0
 
 * [PLAT-346] Handle `to_s` deprecation on Rails 7
