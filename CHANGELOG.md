@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- [PLAT-1175] Update to Ruby 3.2
+
 ## 0.12.0
 
 - [PLAT-954] Handle additional `to_s` deprecation on Rails 7

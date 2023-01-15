@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.files = Dir["CHANGELOG.md", "README.md", "timely.gemspec", "lib/**/*"]
   spec.executables   = []
   spec.require_paths = ['lib']
-  spec.required_ruby_version = '>= 2.7'
+  spec.required_ruby_version = '>= 3.0'
 
   spec.add_development_dependency 'activerecord', '>=6', '<8'
   spec.add_development_dependency 'activesupport', '>=6', '<8'
