@@ -7,7 +7,7 @@ require 'timely/rails/period'
 
 describe Timely::Period do
   before do
-    Timecop.freeze(DateTime.new(2000, 1, 10, 12, 0, 0))
+    Timecop.freeze(Time.new(2000, 1, 10, 12, 0, 0))
   end
   after { Timecop.return }
 
@@ -35,9 +35,9 @@ describe Timely::Period do
     expect(period_in_weeks.to_seconds).to eq 604800
     expect(period_in_months.to_seconds).to eq 2629746
     expect(period_in_years.to_seconds).to eq 31556952
-    expect(period_in_calendar_days.to_seconds.round).to eq 91800
-    expect(period_in_calendar_months.to_seconds.round).to eq 1819800
-    expect(period_in_calendar_years.to_seconds.round).to eq 30763800
+    expect(period_in_calendar_days.to_seconds.round).to eq 129600
+    expect(period_in_calendar_months.to_seconds.round).to eq 1857600
+    expect(period_in_calendar_years.to_seconds.round).to eq 30801600
   end
 
   specify do
