@@ -15,5 +15,6 @@ describe Timely::Period do
 
   specify do
     expect(period.to_s).to eq '2 minutes'
+    expect(period.to_seconds).to eq 120
   end
 end
