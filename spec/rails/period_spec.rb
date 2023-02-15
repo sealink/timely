@@ -22,7 +22,7 @@ describe Timely::Period do
   let(:period_in_weeks) { Timely::Period.new(1, :weeks) }
   let(:period_in_months) { Timely::Period.new(1, :months) }
   let(:period_in_years) { Timely::Period.new(1, :years) }
-  let(:period_in_calendar_days) { Timely::Period.new(1, :calendar_days) }
+  let(:period_in_calendar_days) { Timely::Period.new(2, :calendar_days) }
   let(:period_in_calendar_months) { Timely::Period.new(1, :calendar_months) }
   let(:period_in_calendar_years) { Timely::Period.new(1, :calendar_years) }
 
@@ -35,7 +35,7 @@ describe Timely::Period do
     expect(period_in_weeks.to_seconds).to eq 604800
     expect(period_in_months.to_seconds).to eq 2629746
     expect(period_in_years.to_seconds).to eq 31556952
-    expect(period_in_calendar_days.to_seconds.round).to eq 5400
+    expect(period_in_calendar_days.to_seconds.round).to eq 91800
     expect(period_in_calendar_months.to_seconds.round).to eq 1819800
     expect(period_in_calendar_years.to_seconds.round).to eq 30763800
   end
