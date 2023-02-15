@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.14.0
 
 - [TF-36] Add to_seconds method in Period class
 
